@@ -6,7 +6,7 @@
   <br>
   <div class="w3-row">
     <button mat-raised-button color="primary" *ngIf="perms[0]['gru_b_crear']" routerLink="crear-grupo" style="display:inline-block">Crear nuevo</button>
-    <mat-form-field floatPlaceholder="never">
+    <mat-form-field floatPlaceholder="never" style="margin-left:10px">
       <input matInput type="text" (input)="filterData($event.target.value)" placeholder="filtrar contenido">
       <mat-hint>
         Escribe una palabra
