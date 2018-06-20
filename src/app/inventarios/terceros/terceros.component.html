@@ -5,17 +5,17 @@
   <br>
   <div class="w3-row">
     <button mat-raised-button color="primary" *ngIf="perms[0]['ter_b_crear']" routerLink="crear-tercero" style="display:inline-block">Crear nuevo</button>
-    <mat-form-field floatPlaceholder="never">
+    <mat-form-field floatPlaceholder="never" style="margin-left:10px">
       <input matInput type="text" (input)="filterData($event.target.value)" placeholder="filtrar contenido" autocomplete="off">
       <mat-hint>
         Escribe una palabra
       </mat-hint>
     </mat-form-field>
     <mat-radio-group (change)="filterTercero()" [(ngModel)]="tipoTercero">
-      <mat-radio-button color="primary" value=''>Todos</mat-radio-button>
-      <mat-radio-button color="primary" value='Cliente'>Cliente</mat-radio-button>
-      <mat-radio-button color="primary" value='Proveedor'>Proveedor</mat-radio-button>
-      <mat-radio-button color="primary" value='Interno'>Interno</mat-radio-button>
+      <mat-radio-button style="margin-left:10px" color="primary" value=''>Todos</mat-radio-button>
+      <mat-radio-button style="margin-left:10px" color="primary" value='Cliente'>Cliente</mat-radio-button>
+      <mat-radio-button style="margin-left:10px" color="primary" value='Proveedor'>Proveedor</mat-radio-button>
+      <mat-radio-button style="margin-left:10px" color="primary" value='Interno'>Interno</mat-radio-button>
     </mat-radio-group>
   </div>
   <router-outlet></router-outlet>
