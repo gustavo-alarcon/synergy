@@ -11,6 +11,7 @@
       <div class="w3-row-padding">
 
         <div class="w3-col s12 m4 l4">
+          <h3 class="meraki-font-s5">Reporte</h3>
           <mat-form-field color="accent" class="meraki-fill">
             <input #fecha matInput [matDatepicker]="picker" [max]="timeLimit" placeholder="Fecha" (dateInput)="onInput($event)" (dateChange)="onChange($event)"
               [value]="now">
@@ -54,6 +55,7 @@
         </div>
 
         <div class="w3-col s12 m8 l8">
+          <h3 class="meraki-font-s5">Exportar (xls)</h3>
           <mat-form-field>
             <mat-select #sepcel (selectionChange)="configExportSep(sepcel.value)" [(value)]="separador" aria-placeholder="Filtro" placeholder="Separador celdas">
               <mat-option class="w3-indigo w3-hover-gray" value=",">( , ) Coma</mat-option>

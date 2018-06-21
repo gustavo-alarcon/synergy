@@ -10,7 +10,7 @@
         <br>
         <div class="w3-row-padding">
           <div class="w3-col s12 m4 l4">
-            <h3 class="meraki-font-s5 w3-center">Almacenes</h3>
+            <h3 class="meraki-font-s5">Almacenes</h3>
             <mat-form-field class="meraki-fill">
               <mat-select #almOrigen formControlName="Almacen" aria-placeholder="Almacen" placeholder="Almacen" (selectionChange)="filtrarProductos(almOrigen.value)">
                 <mat-option class="w3-indigo w3-hover-gray" *ngFor="let almacen of almacenes" [value]="almacen.Nombre">{{ almacen.Nombre }}</mat-option>
@@ -39,7 +39,7 @@
             <br>
           </div>
           <div class="w3-col s12 m4 l4">
-            <h3 class="meraki-font-s5 w3-center">Productos</h3>
+            <h3 class="meraki-font-s5">Productos</h3>
             <div style="display: flex; align-items: center">
               <mat-slide-toggle style="margin-right: 5px;" [checked]="checked" matTooltip="Cambia entre nombre y codigo" matTooltipPosition="above"
                 labelPosition='before' (change)="slideToogleChange($event)"></mat-slide-toggle>
@@ -68,7 +68,7 @@
             <br>
           </div>
           <div class="w3-col s12 m4 l4">
-            <h3 class="meraki-font-s5 w3-center">Exportar</h3>
+            <h3 class="meraki-font-s5">Exportar</h3>
             <mat-form-field class="meraki-fill">
               <mat-select #sepcel (selectionChange)="configExportSep(sepcel.value)" [(value)]="separador" aria-placeholder="Filtro" placeholder="Separador celdas">
                 <mat-option class="w3-indigo w3-hover-gray" value=",">( , ) Coma</mat-option>
