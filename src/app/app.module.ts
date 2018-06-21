@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
@@ -5,6 +6,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule, Routes } from "@angular/router";
 import { RoutingModule } from "./routing/routing.module";
+import { AngularFireModule } from "angularfire2";
+
 import {
   MatToolbarModule,
   MatInputModule,
@@ -197,7 +200,8 @@ import { DetailProductsInventComponent } from './inventarios/historial-movimient
     MatTooltipModule,
     MatRadioModule,
     SatPopoverModule,
-    MatSortModule
+    MatSortModule,
+    AngularFireModule.initializeApp(environment.firebase, 'ms-synergy')
   ],
   entryComponents: [
     InputModalComponent,
