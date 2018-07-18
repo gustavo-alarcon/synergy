@@ -34,6 +34,7 @@ import { AuthLoginGuard } from '../guards/auth-login.guard';
 import { MsTextComponent } from '../ms-text/mstext/mstext.component';
 import { SalesHistoryComponent } from '../sales-history/sales-history.component';
 import { HistorialMovimientosComponent } from './../inventarios/historial-movimientos/historial-movimientos.component';
+import { MenuComponent } from '../produccion/menu/menu.component';
 
 
 const appRoutes: Routes = [
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     { path: 'puntoVenta', component: PuntoVentaComponent, data: { animation: 'puntoVenta' , depth: 4}}, 
     { path: 'historialVentas', component: SalesHistoryComponent, data: { animation: 'historialVentas' , depth: 5}}, 
     { path: 'ms-text',component: MsTextComponent, data: { animation: 'ms-text', depth: 4}},
+    { path: 'produccion',component: MenuComponent, data: { animation: 'produccion', depth: 6}},
     { path: '', component: WelcomeComponent , data: { animation: 'primera' , depth: 1}},
     { path: '**', component: WelcomeComponent, data: { animation: 'random' , depth: 1} }
   ];

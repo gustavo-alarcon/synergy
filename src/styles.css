@@ -99,6 +99,11 @@ mat-tab-header {
   justify-content: center;
 }
 
+.mainPadding {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;

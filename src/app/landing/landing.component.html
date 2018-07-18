@@ -26,34 +26,35 @@
           <p class="meraki-font-s5">Inventarios</p>
         </div>
         <div class="w3-center" style="width:100px">
-            <div class="buttonPOS">
-              <button mat-fab class="w3-orange w3-hover-brown" (click)="openMenu()">
-                <mat-icon>credit_card</mat-icon>
-              </button>
-              <p class="meraki-font-s5">POS</p>
-              <div class="options" [@menuInOut]="menu">
-                <div class="historial">
-                    <button matTooltip="Historial" class="w3-hover-purple" matTooltipPosition="above" matTooltipClass="tooltip" mat-mini-fab routerLink="/historialVentas">
-                      <mat-icon>assignment</mat-icon>
-                    </button>
-                  </div>
-                  <div class="pos">
-                    <button matTooltip="Ventas" class="w3-hover-purple" matTooltipClass="tooltip" matTooltipPosition="above" mat-mini-fab routerLink="/puntoVenta">
-                      <mat-icon>shopping_cart</mat-icon>
-                    </button>
-                  </div>
+          <div class="buttonPOS">
+            <button mat-fab class="w3-orange w3-hover-brown" (click)="openMenu()">
+              <mat-icon>credit_card</mat-icon>
+            </button>
+            <p class="meraki-font-s5">POS</p>
+            <div class="options" [@menuInOut]="menu">
+              <div class="historial">
+                <button matTooltip="Historial" class="w3-hover-purple" matTooltipPosition="above" matTooltipClass="tooltip" mat-mini-fab
+                  routerLink="/historialVentas">
+                  <mat-icon>assignment</mat-icon>
+                </button>
               </div>
+              <div class="pos">
+                <button matTooltip="Ventas" class="w3-hover-purple" matTooltipClass="tooltip" matTooltipPosition="above" mat-mini-fab routerLink="/puntoVenta">
+                  <mat-icon>shopping_cart</mat-icon>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="w3-center" style="width:100px">
-          <button mat-fab class="w3-orange w3-hover-brown" [disabled]="!perms[0]['Servicios']">
-                <mat-icon>build</mat-icon>
+          <button mat-fab class="w3-orange w3-hover-brown" routerLink="/produccion">
+            <mat-icon>domain</mat-icon>
           </button>
-          <p class="meraki-font-s5">Servicios</p>
+          <p class="meraki-font-s5">Produccion</p>
         </div>
         <div class="w3-center" style="width:100px">
           <button mat-fab class="w3-orange w3-hover-brown" [disabled]="!perms[0]['Academia']">
-                <mat-icon>school</mat-icon>
+            <mat-icon>school</mat-icon>
           </button>
           <p class="meraki-font-s5">Academia</p>
         </div>
@@ -84,13 +85,13 @@
         </div>
         <div class="w3-center" style="width:100px">
           <button mat-fab class="w3-orange w3-hover-brown" [disabled]="!perms[0]['Web']">
-                <mat-icon>public</mat-icon>
+            <mat-icon>public</mat-icon>
           </button>
           <p class="meraki-font-s5">Página Web</p>
         </div>
         <div class="w3-center" style="width:100px">
           <button mat-fab class="w3-orange w3-hover-brown" [disabled]="!perms[0]['Contabilidad']">
-                <mat-icon>attach_money</mat-icon>
+            <mat-icon>attach_money</mat-icon>
           </button>
           <p class="meraki-font-s5">Contabilidad</p>
         </div>
@@ -101,18 +102,24 @@
     </div>
   </div>
   <div class="row">
-      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-3">
-        <p></p>
-      </div>
-      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-6">
-        <div class="row around-xs middle-xs" style="padding:20px;">
-            <div class="w3-center" style="width:100px">
-                <button mat-fab class="w3-orange w3-hover-brown" (click)="createPage()" routerLink="/ms-text">
-                      <mat-icon>message</mat-icon>
-                </button>
-                <p class="meraki-font-s5">SMS</p>
-              </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-3">
+      <p></p>
+    </div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-6">
+      <div class="row around-xs middle-xs" style="padding:20px;">
+        <div class="w3-center" style="width:100px">
+          <button mat-fab class="w3-orange w3-hover-brown" (click)="createPage()" routerLink="/ms-text">
+            <mat-icon>message</mat-icon>
+          </button>
+          <p class="meraki-font-s5">SMS</p>
         </div>
-      </div>    
-  
-</div>
+        <div class="w3-center" style="width:100px">
+          <button mat-fab class="w3-orange w3-hover-brown" [disabled]="!perms[0]['Servicios']">
+            <mat-icon>build</mat-icon>
+          </button>
+          <p class="meraki-font-s5">Servicios</p>
+        </div>
+      </div>
+    </div>
+
+  </div>

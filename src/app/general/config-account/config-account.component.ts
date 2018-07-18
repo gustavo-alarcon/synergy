@@ -6,6 +6,7 @@ import {
 } from "@angular/forms";
 import { LoginService } from "./../../servicios/login/login.service";
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { InventariosService } from "../../servicios/almacenes/inventarios.service";
 
 @Component({
   selector: "app-config-account",
@@ -55,12 +56,13 @@ export class ConfigAccountComponent implements OnInit {
   };
   modAccountForm: FormGroup;
   clientForm: FormGroup;
-  newImage;
+  newImage = null;
 
   constructor(
     private loginService: LoginService,
     private fb: FormBuilder,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private inventariosService: InventariosService
   ) {}
 
   ngOnInit() {
@@ -70,8 +72,7 @@ export class ConfigAccountComponent implements OnInit {
       nombreComercial: [null, Validators.compose([Validators.required])],
       direccion: [null, Validators.compose([Validators.required])],
       tel1: [null, Validators.compose([Validators.required])],
-      tel2: [null, Validators.compose([Validators.required])],
-      nombreSucursal: [null, Validators.compose([Validators.required])]
+      tel2: [null, Validators.compose([Validators.required])]
     });
 
     this.modAccountForm = this.fb.group({
@@ -461,6 +462,21 @@ export class ConfigAccountComponent implements OnInit {
     } else if (value === false || value === 0) {
       return 0;
     }
+  }
+
+  modificarEmpresa() {
+    let data = {
+      RUC: this.clientForm.get("ruc").value,
+      razon_social: this.clientForm.get("rs").value,
+      nombre_comercial: this.clientForm.get("nombreComercial").value,
+      direccion: this.clientForm.get("direccion").value,
+      tel_1: this.clientForm.get("tel1").value,
+      tel_2: this.clientForm.get("tel2").value,
+      logo_name: this.newImage.name
+    };
+    this.inventariosService.modificarEmpresa(data);
+    if (this.newImage != null)
+      this.inventariosService.guardarLogo(this.newImage);
   }
 
   imageFinishedUploading(file) {

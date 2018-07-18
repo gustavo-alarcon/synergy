@@ -43,15 +43,12 @@
           <input matInput type="number" placeholder="Telefono 2" formControlName="tel2">
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Nombre sucursal" formControlName="nombreSucursal">
-          <mat-icon matSuffix>email</mat-icon>
-        </mat-form-field>
         <div class="image">
           <image-upload [buttonCaption]="'Suba el logo de su empresa'" [dropBoxMessage]="'Arraste el logo de su empresa'" [clearButtonCaption]="'Borrar'"
             [style]="inputFile" [max]="1" (uploadFinished)="imageFinishedUploading($event)" (removed)="onRemoved()"></image-upload>
         </div>
-        <button mat-raised-button color="primary" style="display:inline-block; width: 100%;" [disabled]="!clientForm.valid">Actualizar datos</button>
+        <button mat-raised-button color="primary" style="display:inline-block; width: 100%;" [disabled]="!clientForm.valid && newImage != null"
+          (click)="modificarEmpresa()">Actualizar datos</button>
       </mat-card>
       <br>
       <div class="w3-row w3-border-bottom">

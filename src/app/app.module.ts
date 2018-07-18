@@ -1,4 +1,4 @@
-import { environment } from './../environments/environment';
+import { environment } from "./../environments/environment";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
@@ -106,7 +106,24 @@ import { MainNavComponent } from "./main-nav/main-nav.component";
 import { GenerarSerieComponent } from "./inventarios/productos/generar-serie/generar-serie.component";
 import { DeleteConfirmComponent } from "./inventarios/productos/delete-confirm/delete-confirm.component";
 import { NumSeriesComponent } from "./inventarios/productos/num-series/num-series.component";
-import { DetailProductsInventComponent } from './inventarios/historial-movimientos/detail-products-invent/detail-products-invent.component';
+import { DetailProductsInventComponent } from "./inventarios/historial-movimientos/detail-products-invent/detail-products-invent.component";
+import { MenuComponent } from "./produccion/menu/menu.component";
+import { PrincipalComponent } from "./produccion/principal/principal.component";
+import { GenerarOppComponent } from "./produccion/generar-opp/generar-opp.component";
+import { GenerarOrpComponent } from "./produccion/generar-orp/generar-orp.component";
+import { VerOrpComponent } from "./produccion/ver-orp/ver-orp.component";
+import { ResumenCompraOrcComponent } from "./produccion/resumen-compra-orc/resumen-compra-orc.component";
+import { VerOppComponent } from "./produccion/ver-opp/ver-opp.component";
+import { OppProduccionComponent } from "./produccion/opp-produccion/opp-produccion.component";
+import { ProcesosHomeComponent } from "./produccion/procesos-home/procesos-home.component";
+import { MaterialesHomeComponent } from "./produccion/materiales-home/materiales-home.component";
+import { HistorialComponent } from "./produccion/historial/historial.component";
+import { ProcesosCrearComponent } from "./produccion/procesos-crear/procesos-crear.component";
+import { ProcesosRelacionarComponent } from "./produccion/procesos-relacionar/procesos-relacionar.component";
+import { HistorialDetalleComponent } from "./produccion/historial-detalle/historial-detalle.component";
+import { GenerarOrcComponent } from "./produccion/generar-orc/generar-orc.component";
+import { ConfirmarOrcComponent } from "./produccion/confirmar-orc/confirmar-orc.component";
+import { CrearClienteProduccionComponent } from "./produccion/generar-opp/crear-cliente-produccion/crear-cliente-produccion.component";
 
 @NgModule({
   declarations: [
@@ -159,7 +176,24 @@ import { DetailProductsInventComponent } from './inventarios/historial-movimient
     GenerarSerieComponent,
     DeleteConfirmComponent,
     NumSeriesComponent,
-    DetailProductsInventComponent
+    DetailProductsInventComponent,
+    MenuComponent,
+    PrincipalComponent,
+    GenerarOppComponent,
+    GenerarOrpComponent,
+    VerOrpComponent,
+    ResumenCompraOrcComponent,
+    VerOppComponent,
+    OppProduccionComponent,
+    ProcesosHomeComponent,
+    MaterialesHomeComponent,
+    HistorialComponent,
+    ProcesosCrearComponent,
+    ProcesosRelacionarComponent,
+    HistorialDetalleComponent,
+    GenerarOrcComponent,
+    ConfirmarOrcComponent,
+    CrearClienteProduccionComponent
   ],
   imports: [
     BrowserModule,
@@ -201,7 +235,7 @@ import { DetailProductsInventComponent } from './inventarios/historial-movimient
     MatRadioModule,
     SatPopoverModule,
     MatSortModule,
-    AngularFireModule.initializeApp(environment.firebase, 'ms-synergy')
+    AngularFireModule.initializeApp(environment.firebase, "ms-synergy")
   ],
   entryComponents: [
     InputModalComponent,
@@ -215,7 +249,17 @@ import { DetailProductsInventComponent } from './inventarios/historial-movimient
     ImagenComponent,
     GenerarSerieComponent,
     DeleteConfirmComponent,
-    NumSeriesComponent
+    NumSeriesComponent,
+    GenerarOrpComponent,
+    VerOrpComponent,
+    GenerarOrcComponent,
+    ConfirmarOrcComponent,
+    GenerarOppComponent,
+    CrearClienteProduccionComponent,
+    VerOppComponent,
+    ProcesosCrearComponent,
+    ProcesosRelacionarComponent,
+    HistorialDetalleComponent
   ],
   providers: [
     LoginService,

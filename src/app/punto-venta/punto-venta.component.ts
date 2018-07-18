@@ -271,7 +271,7 @@ export class PuntoVentaComponent implements OnInit {
   getProductsBD() {
     this.posService
       .getProducts(this.bd)
-      .takeWhile(() => this.alive)
+      .pipe(takeWhile(() => this.alive))
       .subscribe(res => {
         this.productos = res.records;
         this.productos.sort(this.sortBy("Nombre"));

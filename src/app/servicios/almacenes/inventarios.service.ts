@@ -476,6 +476,55 @@ export class InventariosService {
       );
   }
 
+  modificarEmpresa(data) {
+    this.queryLoading(true);
+    //this.http.post('http://localhost/meraki-rent/ms-synergy/src/app/servicios/almacenes/handler-grupos-cre.php?db='+this.db, JSON.stringify(data))
+    this.http2
+      .post(
+        "http://www.meraki-s.com/rent/ms-synergy/php/test/handler-info-empresa.php?db=" +
+          this.db,
+        JSON.stringify(data),
+        { responseType: "text" }
+      )
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(
+        res => {
+          this.toastr.success(res, "Exito");
+          this.queryLoading(false);
+        },
+        err => {
+          this.toastr.error("Error de conexión ", "Error");
+          console.log(err);
+          this.queryLoading(false);
+        }
+      );
+  }
+
+  guardarLogo(fileToUpload: File) {
+    this.queryLoading(true);
+    let formData = new FormData();
+    formData.append("file", fileToUpload, fileToUpload.name);
+    return this.http2
+      .post(
+        "http://www.meraki-s.com/rent/ms-synergy/php/test/handler-upload-logo.php?db=" +
+          this.db,
+        formData,
+        { responseType: "text" }
+      )
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(
+        res => {
+          this.toastr.success(res, "Exito");
+          this.queryLoading(false);
+        },
+        err => {
+          this.toastr.error("Error de conexión ", "Error");
+          console.log(err);
+          this.queryLoading(false);
+        }
+      );
+  }
+
   modificarGrupo(data: JSON) {
     this.queryLoading(true);
     //this.http.post('http://localhost/meraki-rent/ms-synergy/src/app/servicios/almacenes/handler-grupos-mod.php?db='+this.db, JSON.stringify(data))
