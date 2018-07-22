@@ -65,6 +65,7 @@ export class InventariosService {
       .pipe(takeWhile(() => this.alive))
       .subscribe(res => {
         this.db = res[0]["Db"];
+        console.log(this.db);
         this.getAlmacenes();
         this.getTerceros();
         this.getDocumentos();

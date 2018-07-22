@@ -32,7 +32,9 @@ export class GenerarSerieComponent implements OnInit {
             arr.findIndex(
               s2 =>
                 s2.Codigo === s1.Codigo &&
-                (s1.Serie_actual == "" || s1.Serie_actual == null)
+                (s1.Serie_actual == "" ||
+                  s1.Serie_actual == null ||
+                  s1.Serie_actual == -1)
             ) === pos
         );
         for (let i = 0; i < this.data.length; i++) {
@@ -46,7 +48,7 @@ export class GenerarSerieComponent implements OnInit {
   generarSeries() {
     if (
       !this.data.every((v, i) => {
-        return v.Serie_actual === this.productosFiltrados[i].Serie_actual;
+        return v.Serie_actual === "";
       })
     ) {
       this.isLoadingResults = true;
@@ -56,6 +58,7 @@ export class GenerarSerieComponent implements OnInit {
         .subscribe(
           res => {
             this.isLoadingResults = false;
+            console.log(res);
             this.toastr.success(res, "Exito");
             this.DialogRef.close("false");
           },
@@ -65,7 +68,7 @@ export class GenerarSerieComponent implements OnInit {
           }
         );
     } else {
-      this.toastr.warning("No ha hecho ningun cambio", "Primero haga cambios");
+      this.toastr.warning("Hay un campo vacio", "Cuidado");
     }
   }
 

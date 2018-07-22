@@ -485,15 +485,15 @@ export class PuntoVentaComponent implements OnInit {
                   ""
                 ) {
                   this.listCustomers[this.currentCustomer].listAction[i].price =
-                    parseFloat(
+                    (parseFloat(
                       this.listCustomers[this.currentCustomer].listAction[i]
                         .price
                     ) *
-                    (100 -
-                      parseFloat(
-                        this.listCustomers[this.currentCustomer].listAction[i]
-                          .dsc
-                      )) /
+                      (100 -
+                        parseFloat(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .dsc
+                        ))) /
                     100;
                   this.listCustomers[this.currentCustomer].listAction[
                     i
@@ -567,17 +567,17 @@ export class PuntoVentaComponent implements OnInit {
               ] != "."
             ) {
               this.listCustomers[this.currentCustomer].listAction[i].price =
-                parseFloat(
+                (parseFloat(
                   this.listCustomers[this.currentCustomer].listAction[i]
                     .unitPrice
                 ) *
-                parseFloat(
-                  this.listCustomers[this.currentCustomer].listAction[i].units
-                ) *
-                (100 -
                   parseFloat(
-                    this.listCustomers[this.currentCustomer].listAction[i].dsc
-                  )) /
+                    this.listCustomers[this.currentCustomer].listAction[i].units
+                  ) *
+                  (100 -
+                    parseFloat(
+                      this.listCustomers[this.currentCustomer].listAction[i].dsc
+                    ))) /
                 100;
               this.listCustomers[this.currentCustomer].listAction[
                 i
@@ -642,17 +642,19 @@ export class PuntoVentaComponent implements OnInit {
                 this.listCustomers[this.currentCustomer].listAction[i].dsc != ""
               ) {
                 this.listCustomers[this.currentCustomer].listAction[i].price =
-                  parseFloat(
+                  (parseFloat(
                     this.listCustomers[this.currentCustomer].listAction[i]
                       .unitPrice
                   ) *
-                  parseFloat(
-                    this.listCustomers[this.currentCustomer].listAction[i].units
-                  ) *
-                  (100 -
                     parseFloat(
-                      this.listCustomers[this.currentCustomer].listAction[i].dsc
-                    )) /
+                      this.listCustomers[this.currentCustomer].listAction[i]
+                        .units
+                    ) *
+                    (100 -
+                      parseFloat(
+                        this.listCustomers[this.currentCustomer].listAction[i]
+                          .dsc
+                      ))) /
                   100;
                 this.listCustomers[this.currentCustomer].listAction[
                   i
@@ -897,20 +899,20 @@ export class PuntoVentaComponent implements OnInit {
                       this.listCustomers[this.currentCustomer].listAction[
                         i
                       ].price =
-                        parseFloat(
+                        (parseFloat(
                           this.listCustomers[this.currentCustomer].listAction[i]
                             .unitPrice
                         ) *
-                        parseFloat(
-                          this.listCustomers[this.currentCustomer].listAction[i]
-                            .units
-                        ) *
-                        (100 -
                           parseFloat(
                             this.listCustomers[this.currentCustomer].listAction[
                               i
-                            ].dsc
-                          )) /
+                            ].units
+                          ) *
+                          (100 -
+                            parseFloat(
+                              this.listCustomers[this.currentCustomer]
+                                .listAction[i].dsc
+                            ))) /
                         100;
                       this.listCustomers[this.currentCustomer].listAction[
                         i
@@ -1007,19 +1009,20 @@ export class PuntoVentaComponent implements OnInit {
                     this.listCustomers[this.currentCustomer].listAction[
                       i
                     ].price =
-                      parseFloat(
+                      (parseFloat(
                         this.listCustomers[this.currentCustomer].listAction[i]
                           .unitPrice
                       ) *
-                      parseFloat(
-                        this.listCustomers[this.currentCustomer].listAction[i]
-                          .units
-                      ) *
-                      (100 -
                         parseFloat(
                           this.listCustomers[this.currentCustomer].listAction[i]
-                            .dsc
-                        )) /
+                            .units
+                        ) *
+                        (100 -
+                          parseFloat(
+                            this.listCustomers[this.currentCustomer].listAction[
+                              i
+                            ].dsc
+                          ))) /
                       100;
                     this.listCustomers[this.currentCustomer].listAction[
                       i
@@ -1034,23 +1037,25 @@ export class PuntoVentaComponent implements OnInit {
                         .length - 1
                     ].toString() == "."
                   ) {
-                    let dscTmp = JSON.parse(JSON.stringify(this.listCustomers[
-                      this.currentCustomer
-                    ].listAction[i].dsc.slice(
-                      0,-1
-                    )));
+                    let dscTmp = JSON.parse(
+                      JSON.stringify(
+                        this.listCustomers[this.currentCustomer].listAction[
+                          i
+                        ].dsc.slice(0, -1)
+                      )
+                    );
                     this.listCustomers[this.currentCustomer].listAction[
                       i
                     ].price =
-                      ((parseFloat(
+                      (parseFloat(
                         this.listCustomers[this.currentCustomer].listAction[i]
                           .unitPrice
                       ) *
-                      parseFloat(
-                        this.listCustomers[this.currentCustomer].listAction[i]
-                          .units
-                      )) *
-                      (100 - parseFloat(dscTmp))) /
+                        parseFloat(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .units
+                        ) *
+                        (100 - parseFloat(dscTmp))) /
                       100;
                     this.listCustomers[this.currentCustomer].listAction[
                       i
@@ -1164,19 +1169,20 @@ export class PuntoVentaComponent implements OnInit {
                     this.listCustomers[this.currentCustomer].listAction[
                       i
                     ].price =
-                      parseFloat(
+                      (parseFloat(
                         this.listCustomers[this.currentCustomer].listAction[i]
                           .unitPrice
                       ) *
-                      parseFloat(
-                        this.listCustomers[this.currentCustomer].listAction[i]
-                          .units
-                      ) *
-                      (100 -
                         parseFloat(
                           this.listCustomers[this.currentCustomer].listAction[i]
-                            .dsc
-                        )) /
+                            .units
+                        ) *
+                        (100 -
+                          parseFloat(
+                            this.listCustomers[this.currentCustomer].listAction[
+                              i
+                            ].dsc
+                          ))) /
                       100;
                     this.listCustomers[this.currentCustomer].listAction[
                       i
@@ -1257,17 +1263,17 @@ export class PuntoVentaComponent implements OnInit {
               this.listCustomers[this.currentCustomer].listAction[i].dsc != ""
             ) {
               this.listCustomers[this.currentCustomer].listAction[i].price =
-                parseFloat(
+                (parseFloat(
                   this.listCustomers[this.currentCustomer].listAction[i]
                     .unitPrice
                 ) *
-                parseFloat(
-                  this.listCustomers[this.currentCustomer].listAction[i].units
-                ) *
-                (100 -
                   parseFloat(
-                    this.listCustomers[this.currentCustomer].listAction[i].dsc
-                  )) /
+                    this.listCustomers[this.currentCustomer].listAction[i].units
+                  ) *
+                  (100 -
+                    parseFloat(
+                      this.listCustomers[this.currentCustomer].listAction[i].dsc
+                    ))) /
                 100;
             }
           }
@@ -1643,7 +1649,7 @@ export class PuntoVentaComponent implements OnInit {
           this.listCustomers[this.currentCustomer].subtotal =
             this.listCustomers[this.currentCustomer].total / 1.18;
           this.listCustomers[this.currentCustomer].taxes =
-            this.listCustomers[this.currentCustomer].total * 18 / 100;
+            (this.listCustomers[this.currentCustomer].total * 18) / 100;
           this.listCustomers[
             this.currentCustomer
           ].lastItemClicked = this.pack_nombre[i].ID;
@@ -1656,6 +1662,52 @@ export class PuntoVentaComponent implements OnInit {
           this.listCustomers[this.currentCustomer].subtotal = parseFloat(
             this.listCustomers[this.currentCustomer].subtotal.toFixed(2)
           );
+          this.cd.markForCheck();
+          this.addNumSerie();
+          this.isLoadingResultsCheck.push(true);
+          this.posService
+            .getNumSerie(this.bd, this.productos_filtrado[i].Nombre)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe(
+              data => {
+                this.listCustomers[this.currentCustomer].listAction[
+                  this.listCustomers[this.currentCustomer].listAction.length - 1
+                ].listNumSeries =
+                  data.records;
+                for (
+                  let i = 0;
+                  i <
+                  this.listCustomers[this.currentCustomer].listAction[
+                    this.listCustomers[this.currentCustomer].listAction.length -
+                      1
+                  ].listNumSeries.length;
+                  i++
+                ) {
+                  if (
+                    this.listCustomers[this.currentCustomer].listAction[
+                      this.listCustomers[this.currentCustomer].listAction
+                        .length - 1
+                    ].listNumSeries[i].almacen == this.selectedWarehouse
+                  ) {
+                    this.listCustomers[this.currentCustomer].listAction[
+                      this.listCustomers[this.currentCustomer].listAction
+                        .length - 1
+                    ].cantidadMaxima++;
+                  }
+                }
+                this.isLoadingResultsCheck[
+                  this.listCustomers[this.currentCustomer].listAction.length - 1
+                ] = false;
+                this.cd.markForCheck();
+              },
+              err => {
+                this.isLoadingResultsCheck[
+                  this.listCustomers[this.currentCustomer].listAction.length - 1
+                ] = false;
+                this.cd.markForCheck();
+              }
+            );
+          console.log(this.listCustomers[this.currentCustomer].listAction);
         } else {
           this.toastr.warning(
             "El paquete ya esta en la lista de venta, haga click en el para aumentar la cantidad",
@@ -1695,16 +1747,16 @@ export class PuntoVentaComponent implements OnInit {
         ).toFixed(2);
         if (this.listCustomers[this.currentCustomer].listAction[i].dsc != "") {
           this.listCustomers[this.currentCustomer].listAction[i].price =
-            parseFloat(
+            (parseFloat(
               this.listCustomers[this.currentCustomer].listAction[i].unitPrice
             ) *
-            parseFloat(
-              this.listCustomers[this.currentCustomer].listAction[i].units
-            ) *
-            (100 -
               parseFloat(
-                this.listCustomers[this.currentCustomer].listAction[i].dsc
-              )) /
+                this.listCustomers[this.currentCustomer].listAction[i].units
+              ) *
+              (100 -
+                parseFloat(
+                  this.listCustomers[this.currentCustomer].listAction[i].dsc
+                ))) /
             100;
           this.listCustomers[this.currentCustomer].listAction[
             i
@@ -1756,7 +1808,15 @@ export class PuntoVentaComponent implements OnInit {
         hasEmptyProducts = true;
         break;
       }
-      if(this.listCustomers[this.currentCustomer].listAction[i].dsc[this.listCustomers[this.currentCustomer].listAction[i].dsc.length-1] == "." || this.listCustomers[this.currentCustomer].listAction[i].unitPrice[this.listCustomers[this.currentCustomer].listAction[i].unitPrice.length-1] == "."){
+      if (
+        this.listCustomers[this.currentCustomer].listAction[i].dsc[
+          this.listCustomers[this.currentCustomer].listAction[i].dsc.length - 1
+        ] == "." ||
+        this.listCustomers[this.currentCustomer].listAction[i].unitPrice[
+          this.listCustomers[this.currentCustomer].listAction[i].unitPrice
+            .length - 1
+        ] == "."
+      ) {
         dot = true;
       }
     }
@@ -1830,15 +1890,15 @@ export class PuntoVentaComponent implements OnInit {
     ) {
       if (this.listCustomers[this.currentCustomer].listAction[i].dsc != "") {
         totalDsc =
-          parseFloat(
+          (parseFloat(
             this.listCustomers[this.currentCustomer].listAction[i].unitPrice
           ) *
-          parseFloat(
-            this.listCustomers[this.currentCustomer].listAction[i].units
-          ) *
-          parseFloat(
-            this.listCustomers[this.currentCustomer].listAction[i].dsc
-          ) /
+            parseFloat(
+              this.listCustomers[this.currentCustomer].listAction[i].units
+            ) *
+            parseFloat(
+              this.listCustomers[this.currentCustomer].listAction[i].dsc
+            )) /
           100;
         totalDsc = totalDsc.toFixed(2);
       }
@@ -1851,31 +1911,30 @@ export class PuntoVentaComponent implements OnInit {
           {
             text: "DSCTO X PROMOCION ",
             fontSize: 3,
-            alignment: "left",
+            alignment: "left"
           },
-          {  
+          {
             text: "S/." + totalDsc,
             alignment: "right",
-            fontSize: 3, 
-            margin: [0, 0, 3,0]
+            fontSize: 3,
+            margin: [0, 0, 3, 0]
           }
         ]
       };
     }
   }
 
-  getVuelto(vuelto){
-    if(vuelto != ''){
-      return { 
-          text: "VUELTO: S/."+ vuelto, 
-          fontSize: 3 , 
-          lineHeight: 1.2 
-        };
-      }
-      else {
-        return {};
-      }
+  getVuelto(vuelto) {
+    if (vuelto != "") {
+      return {
+        text: "VUELTO: S/." + vuelto,
+        fontSize: 3,
+        lineHeight: 1.2
+      };
+    } else {
+      return {};
     }
+  }
 
   table(data) {
     return {
@@ -1954,8 +2013,8 @@ export class PuntoVentaComponent implements OnInit {
     return body;
   }
 
-  clienteEmpresa(){
-    if(this.listCustomers[this.currentCustomer].client.IdentiClass != 'RUC' ){
+  clienteEmpresa() {
+    if (this.listCustomers[this.currentCustomer].client.IdentiClass != "RUC") {
       return {
         text:
           "SR(A). " +
@@ -1964,62 +2023,61 @@ export class PuntoVentaComponent implements OnInit {
         alignment: "left",
         fontSize: 3,
         lineHeight: 1.2
-      }
+      };
     } else {
-      return [ 
+      return [
         {
-        text:
-          "Nombre(RS): " +
-          this.listCustomers[this.currentCustomer].client.Nombre +
-          "\n",
-        alignment: "left",
-        fontSize: 3,
-        lineHeight: 1.2
-      },
-      {
-        text:
-          "RUC: " +
-          this.listCustomers[this.currentCustomer].client.Identi +
-          "\n",
-        alignment: "left",
-        fontSize: 3,
-        lineHeight: 1.2
-      },
-      {
-        text:
-          "Dirección: " +
-          this.listCustomers[this.currentCustomer].client.Direccion +
-          "\n",
-        alignment: "left",
-        fontSize: 3,
-        lineHeight: 1.2
-      }
-    ]
+          text:
+            "Nombre(RS): " +
+            this.listCustomers[this.currentCustomer].client.Nombre +
+            "\n",
+          alignment: "left",
+          fontSize: 3,
+          lineHeight: 1.2
+        },
+        {
+          text:
+            "RUC: " +
+            this.listCustomers[this.currentCustomer].client.Identi +
+            "\n",
+          alignment: "left",
+          fontSize: 3,
+          lineHeight: 1.2
+        },
+        {
+          text:
+            "Dirección: " +
+            this.listCustomers[this.currentCustomer].client.Direccion +
+            "\n",
+          alignment: "left",
+          fontSize: 3,
+          lineHeight: 1.2
+        }
+      ];
     }
   }
 
   generatePDF(result) {
     let numero;
     let decimal = null;
-    let total : any = parseFloat(
+    let total: any = parseFloat(
       this.listCustomers[this.currentCustomer].total.toString()
     ).toFixed(2);
-    if(total % 1 != 0){
+    if (total % 1 != 0) {
       let num = total.toString();
-      num = num.split('.');
+      num = num.split(".");
       numero = num[0];
-      decimal  = num[1];
-    }
-    else{
+      decimal = num[1];
+    } else {
       numero = total;
     }
     numero = parseInt(numero);
     let date = this.currentDate();
     let n2t = new N2t();
-    let totalText : string = n2t.convertirLetras(numero);
+    let totalText: string = n2t.convertirLetras(numero);
     totalText = totalText.toUpperCase();
     totalText = totalText.trim();
-    if(decimal != null) {
+    if (decimal != null) {
       totalText += " CON " + decimal + "/100";
     }
     let saleTicket = {
@@ -2049,7 +2107,12 @@ export class PuntoVentaComponent implements OnInit {
           lineHeight: 1.2
         },
         {
-          text: "BOLETA ELECTRÓNICA: " + result.serie + " - " + result.correlativo + "\n\n",
+          text:
+            "BOLETA ELECTRÓNICA: " +
+            result.serie +
+            " - " +
+            result.correlativo +
+            "\n\n",
           alignment: "center",
           fontSize: 3,
           lineHeight: 1.2
@@ -2086,7 +2149,7 @@ export class PuntoVentaComponent implements OnInit {
           lineHeight: 1.2
         },
         {
-          text : "--------------------------------------------------------",
+          text: "--------------------------------------------------------",
           fontSize: 3,
           lineHeight: 1.2
         },
@@ -2098,7 +2161,7 @@ export class PuntoVentaComponent implements OnInit {
         },*/
         this.clienteEmpresa(),
         {
-          text : "--------------------------------------------------------",
+          text: "--------------------------------------------------------",
           fontSize: 3,
           lineHeight: 1.2
         },
@@ -2111,16 +2174,19 @@ export class PuntoVentaComponent implements OnInit {
           { text: "Imp.", fontSize: 3 }
         ]),
         {
-          text : "--------------------------------------------------------",
+          text: "--------------------------------------------------------",
           fontSize: 3,
           lineHeight: 1.2
         },
         this.calculateDsc(),
         {
-          text:"Total: S/." + this.listCustomers[this.currentCustomer].total + "\n",
+          text:
+            "Total: S/." +
+            this.listCustomers[this.currentCustomer].total +
+            "\n",
           alignment: "right",
-          fontSize: 3, 
-          margin: [0, 0, 3,0],
+          fontSize: 3,
+          margin: [0, 0, 3, 0],
           lineHeight: 1.2
         },
         {
@@ -2131,11 +2197,11 @@ export class PuntoVentaComponent implements OnInit {
               alignment: "left",
               lineHeight: 1.2
             },
-            {  
+            {
               text: "S/." + this.listCustomers[this.currentCustomer].subtotal,
               alignment: "right",
-              fontSize: 3, 
-              margin: [0, 0, 3,0],
+              fontSize: 3,
+              margin: [0, 0, 3, 0],
               lineHeight: 1.2
             }
           ]
@@ -2148,11 +2214,11 @@ export class PuntoVentaComponent implements OnInit {
               alignment: "left",
               lineHeight: 1.2
             },
-            {  
+            {
               text: "S/." + this.listCustomers[this.currentCustomer].taxes,
               alignment: "right",
-              fontSize: 3, 
-              margin: [0, 0, 3,0],
+              fontSize: 3,
+              margin: [0, 0, 3, 0],
               lineHeight: 1.2
             }
           ]
@@ -2165,17 +2231,25 @@ export class PuntoVentaComponent implements OnInit {
               alignment: "left",
               lineHeight: 1.2
             },
-            {  
+            {
               text: "S/." + this.listCustomers[this.currentCustomer].total,
               alignment: "right",
-              fontSize: 3, 
-              margin: [0, 0, 3,0],
+              fontSize: 3,
+              margin: [0, 0, 3, 0],
               lineHeight: 1.2
             }
           ]
         },
-        { text: "\nSON : " + totalText + " SOLES", fontSize: 3 , lineHeight: 1.2},
-        { text: "ENTREGADO: S/." + result.entregado, fontSize: 3 , lineHeight: 1.2 },
+        {
+          text: "\nSON : " + totalText + " SOLES",
+          fontSize: 3,
+          lineHeight: 1.2
+        },
+        {
+          text: "ENTREGADO: S/." + result.entregado,
+          fontSize: 3,
+          lineHeight: 1.2
+        },
         this.getVuelto(result.vuelto),
         {
           columns: [
@@ -2185,18 +2259,24 @@ export class PuntoVentaComponent implements OnInit {
               alignment: "left",
               lineHeight: 1.2
             },
-            {  
-              text: "VENDEDOR: " + this.listCustomers[this.currentCustomer].user,
+            {
+              text:
+                "VENDEDOR: " + this.listCustomers[this.currentCustomer].user,
               alignment: "right",
-              fontSize: 3, 
-              margin: [0, 0, 3,0],
+              fontSize: 3,
+              margin: [0, 0, 3, 0],
               lineHeight: 1.2
             }
           ]
         },
-        { text: "\n\nBoleta electrónica\n\n", alignment: "center", fontSize: 3 , lineHeight: 1.2}
+        {
+          text: "\n\nBoleta electrónica\n\n",
+          alignment: "center",
+          fontSize: 3,
+          lineHeight: 1.2
+        }
       ],
-      defaultStyle: { font: 'IBM' },
+      defaultStyle: { font: "IBM" },
       pageSize: {
         width: 104.88,
         height: "auto"
@@ -2209,7 +2289,9 @@ export class PuntoVentaComponent implements OnInit {
         }
       }
     };
-    pdfMake.createPdf(saleTicket).download("Boleta " + result.serie + " - " + result.correlativo);
+    pdfMake
+      .createPdf(saleTicket)
+      .download("Boleta " + result.serie + " - " + result.correlativo);
     try {
       pdfMake.createPdf(saleTicket).print();
     } catch (e) {
@@ -2238,14 +2320,14 @@ export class PuntoVentaComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       } else {
         if (currentDate.getMonth() + 1 < 10) {
@@ -2254,40 +2336,40 @@ export class PuntoVentaComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       }
     } else {
       if (currentDate.getMonth() + 1 < 12) {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }
       } else {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             1 +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
@@ -2295,7 +2377,7 @@ export class PuntoVentaComponent implements OnInit {
             currentDate.getFullYear() +
             1 +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }

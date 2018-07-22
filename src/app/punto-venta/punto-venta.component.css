@@ -303,7 +303,7 @@ mat-grid-tile:hover .packageProducts {
   width: 96%;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding-top: 10px;
 }

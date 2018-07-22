@@ -54,7 +54,7 @@
                                 alt="">
                             <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
-                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }} | Stock : {{option.Stock_actual}}</h3>
+                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}}</h3>
                                 <mat-icon>star_border</mat-icon>
                             </mat-grid-tile-footer>
                         </mat-grid-tile>
@@ -94,7 +94,7 @@
                                 alt="">
                             <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
-                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }} | Stock : {{option.Stock_actual}}</h3>
+                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
                             </mat-grid-tile-footer>
                         </mat-grid-tile>
@@ -134,7 +134,7 @@
                                 alt="">
                             <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
-                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }} | Stock : {{option.Stock_actual}}</h3>
+                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
                             </mat-grid-tile-footer>
                         </mat-grid-tile>
@@ -174,7 +174,7 @@
                                 alt="">
                             <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
-                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }} | Stock : {{option.Stock_actual}}</h3>
+                                <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
                             </mat-grid-tile-footer>
                         </mat-grid-tile>
@@ -303,7 +303,7 @@
                         <span class="productName">{{product.product}}</span>
                         <span class="productClass">$ {{product.price == '' ? '0' : product.price}}</span>
                         <div style="display: flex; align-items: center; justify-content: center; width: 90%;">
-                            <mat-form-field color="accent" style="width : 100%">
+                            <mat-form-field *ngIf='product.package != 1' color="accent" style="width : 100%">
                                 <mat-select placeholder="Numeros de serie" multiple formControlName="numSeriesSelected" (selectionChange)="valueSerie(i)">
                                     <mat-select-trigger>
                                         <span>
@@ -332,6 +332,7 @@
                                         <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Unidad</th>
+                                        <th>Num. Serie</th>
                                     </tr>
                                 </thead>
                                 <tbody>

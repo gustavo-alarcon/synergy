@@ -234,8 +234,7 @@ import { CrearClienteProduccionComponent } from "./produccion/generar-opp/crear-
     MatTooltipModule,
     MatRadioModule,
     SatPopoverModule,
-    MatSortModule,
-    AngularFireModule.initializeApp(environment.firebase, "ms-synergy")
+    MatSortModule
   ],
   entryComponents: [
     InputModalComponent,
