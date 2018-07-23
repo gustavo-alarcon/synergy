@@ -5,11 +5,8 @@
     <div class="containerOptions">
       <mat-form-field class="optionsLine">
         <mat-select placeholder="Productos">
-          <mat-option value="prodcuto">
-            Producto 1
-          </mat-option>
-          <mat-option value="prodcuto">
-            Producto 1
+          <mat-option *ngFor="let prod of productos; let i = index" value="prod.Nombre">
+            {{ prod.Nombre }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -23,11 +20,8 @@
       </mat-form-field>
       <mat-form-field class="optionsLine">
         <mat-select placeholder="Almacen">
-          <mat-option value="alamcen">
-            Alamacen 1
-          </mat-option>
-          <mat-option value="alamcen">
-            Almacen 2
+          <mat-option *ngFor="let alm of almacenes" value="alm.Nombre">
+            {{ alm.Nombre }}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -16,6 +16,10 @@ import { Angular2Csv } from "angular2-csv/Angular2-csv";
   styleUrls: ["./kardex.component.css"]
 })
 export class KardexComponent implements OnInit {
+
+  options: any;
+  exportKardex: any;
+
   now: any;
   timeLimit: any;
   consulta: boolean = false;
@@ -25,7 +29,23 @@ export class KardexComponent implements OnInit {
   almacenes: any[] = [];
   productos: any[] = [];
   productos_filtrado: any[] = [];
-  kardex: any[] = [];
+  kardex: any[] = [{
+    Fecha: "",
+    Documento: "",
+    Serie: "",
+    Correlativo: "",
+    Movimiento: "",
+    E_cantidad: "",
+    E_costo: "",
+    E_total: "",
+    S_cantidad: "",
+    S_costo: "",
+    S_total: "",
+    Stock: "",
+    SL_costo: "",
+    SL_total: "",
+    Stock_inicial: ""
+  }];
 
   sum_entrada = 0;
   sum_salida = 0;
@@ -203,28 +223,46 @@ export class KardexComponent implements OnInit {
 
   onSubmit() {
     this.consulta = false;
-    this.kardex = [];
+    this.kardex = [{
+      Fecha: "",
+      Documento: "",
+      Serie: "",
+      Correlativo: "",
+      Movimiento: "",
+      E_cantidad: "",
+      E_costo: "",
+      E_total: "",
+      S_cantidad: "",
+      S_costo: "",
+      S_total: "",
+      Stock: "",
+      SL_costo: "",
+      SL_total: "",
+      Stock_inicial: ""
+    }];
     this.inventariosService.consultaKardex(this.kardexForm.value);
 
     this.inventariosService.currentDataKardex.subscribe(res => {
       this.kardex = res;
-
-      this.kardex.unshift({
-        Fecha: "",
-        Documento: "STOCK INICIAL",
-        Serie: "",
-        Correlativo: "",
-        Movimiento: "",
-        E_cantidad: 0,
-        E_costo: 0,
-        E_total: 0,
-        S_cantidad: 0,
-        S_costo: 0,
-        S_total: 0,
-        Stock: this.stock_inicial,
-        SL_costo: 0,
-        SL_total: 0
-      });
+      
+      if(this.kardex[0].Documento != 'STOCK INICIAL'){
+        this.kardex.unshift({
+          Fecha: "",
+          Documento: "STOCK INICIAL",
+          Serie: "",
+          Correlativo: "",
+          Movimiento: "",
+          E_cantidad: 0,
+          E_costo: 0,
+          E_total: 0,
+          S_cantidad: 0,
+          S_costo: 0,
+          S_total: 0,
+          Stock: this.stock_inicial,
+          SL_costo: 0,
+          SL_total: 0
+        });
+      }
 
       this.queryDone = true;
 
