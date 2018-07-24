@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialogRef, MatDialog } from "@angular/material";
 import { MAT_DIALOG_DATA } from "@angular/material";
+import { InventariosService } from "./../../servicios/almacenes/inventarios.service";
+import { takeWhile } from "rxjs/operators";
 
 @Component({
   selector: "app-generar-orp",
@@ -36,12 +38,27 @@ export class GenerarOrpComponent implements OnInit {
   };
   newImage;
 
+  productos: any[] = [];
+  almacenes: any[] = [];
+  private alive: boolean = true;
+
   constructor(
+    private inventariosService: InventariosService,
     public DialogRef: MatDialogRef<GenerarOrpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.inventariosService.currentDataProductos
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(res => {
+        this.productos = res;
+      });
+
+    this.inventariosService.currentDataAlmacenes.subscribe(res => {
+      this.almacenes = res;
+    });
+  }
 
   onNoClick() {
     this.DialogRef.close("close");

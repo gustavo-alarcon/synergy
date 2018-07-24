@@ -16,6 +16,9 @@ import { Angular2Csv } from "angular2-csv/Angular2-csv";
   styleUrls: ["./kardex.component.css"]
 })
 export class KardexComponent implements OnInit {
+  options: any;
+  exportKardex: any;
+
   now: any;
   timeLimit: any;
   consulta: boolean = false;
@@ -25,7 +28,25 @@ export class KardexComponent implements OnInit {
   almacenes: any[] = [];
   productos: any[] = [];
   productos_filtrado: any[] = [];
-  kardex: any[] = [];
+  kardex: any[] = [
+    {
+      Fecha: "",
+      Documento: "",
+      Serie: "",
+      Correlativo: "",
+      Movimiento: "",
+      E_cantidad: "",
+      E_costo: "",
+      E_total: "",
+      S_cantidad: "",
+      S_costo: "",
+      S_total: "",
+      Stock: "",
+      SL_costo: "",
+      SL_total: "",
+      Stock_inicial: ""
+    }
+  ];
 
   sum_entrada = 0;
   sum_salida = 0;
