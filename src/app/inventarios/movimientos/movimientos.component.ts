@@ -9,7 +9,8 @@ import {
   FormGroup,
   FormBuilder,
   AbstractControl,
-  ValidatorFn
+  ValidatorFn,
+  FormArray
 } from "@angular/forms";
 import { MatChipInputEvent } from "@angular/material";
 import { ENTER } from "@angular/cdk/keycodes";
@@ -92,8 +93,11 @@ export class MovimientosComponent implements OnInit {
   filteredPackages: string[];
   numSeries: any[] = [];
   seriesSelected = new FormControl([]);
+  formSelectNumSeries: FormGroup;
+  numSeriesInProduct: FormArray;
   prodEscogido;
   cantidadMaximaProductos: number = 0;
+  isPaquete: boolean = false;
 
   constructor(
     private inventariosService: InventariosService,
@@ -106,6 +110,9 @@ export class MovimientosComponent implements OnInit {
 
   ngOnInit() {
     this.numSeries = [];
+    this.formSelectNumSeries = this.fb.group({
+      numSeriesArray: this.fb.array([])
+    });
     this.loginService.currentUserInfo
       .pipe(takeWhile(() => this.alive))
       .subscribe(res => {
@@ -218,9 +225,34 @@ export class MovimientosComponent implements OnInit {
     this.onChanges2();
   }
 
+  createNumSerie(): FormGroup {
+    return this.fb.group({
+      numSeriesSelected: []
+    });
+  }
+
+  createNumSeriePackage(paquete?): FormGroup {
+    return this.fb.group({
+      numSeriesSelected: [],
+      paquete: paquete
+    });
+  }
+
+  addNumSerie(isPackage?): void {
+    this.numSeriesInProduct = this.formSelectNumSeries.get(
+      "numSeriesArray"
+    ) as FormArray;
+    if (!isPackage) {
+      this.numSeriesInProduct.push(this.createNumSerie());
+    } else {
+      this.numSeriesInProduct.push(this.createNumSeriePackage(isPackage));
+    }
+  }
+
   selectProduct(): void {
     let nombre;
     this.numSeries = [];
+    this.isPaquete = false;
     this.seriesSelected.patchValue([]);
     this.productName = this.movimientoForm.get("Producto").value;
     this.pushKeyProducts();
@@ -548,6 +580,7 @@ export class MovimientosComponent implements OnInit {
     this.movimientoForm.patchValue({ Cantidad: "" });
     this.productos_filtrado = [];
     this.seriesSelected.patchValue([]);
+    this.paquetes_filtrado = [];
     this.productos.forEach(element => {
       if (element["Zona"] === alm) {
         this.productos_filtrado.push(element);
@@ -619,6 +652,11 @@ export class MovimientosComponent implements OnInit {
   }
 
   pushKeyPackage() {
+    this.cantidadMaximaProductos = 0;
+    this.formSelectNumSeries = this.fb.group({
+      numSeriesArray: this.fb.array([])
+    });
+    this.movimientoForm.patchValue({ Cantidad: "" });
     this.filteredPackages = this.filterPackage(
       this.movimientoForm.value["Paquete"]
     );
@@ -643,7 +681,6 @@ export class MovimientosComponent implements OnInit {
   }
 
   prodActual(prod: any) {
-    console.log(prod);
     if (prod != undefined) {
       this.prodEscogido = prod;
       this.precioActual = 0;
@@ -675,6 +712,10 @@ export class MovimientosComponent implements OnInit {
 
   packActual(pack: any) {
     this.precioActual = 0;
+    this.isPaquete = true;
+    this.formSelectNumSeries = this.fb.group({
+      numSeriesArray: this.fb.array([])
+    });
     this.movimientoForm.controls["Precio"].disable();
     this.movimientoForm.patchValue({ Precio: 0 });
     this.lista_items_paquete = [];
@@ -693,7 +734,6 @@ export class MovimientosComponent implements OnInit {
             parseFloat(element["PrecioUnitario"]) *
               parseFloat(element["Cantidad"]);
         }
-
         this.lista_items_paquete.push({
           Producto: element["Nombre"],
           Cantidad: element["Cantidad"],
@@ -701,49 +741,135 @@ export class MovimientosComponent implements OnInit {
           Venta: element["Venta"],
           Unidad: element["Unidad"],
           Moneda: element["Moneda"],
-          PrecioUnitario: element["PrecioUnitario"]
+          PrecioUnitario: element["PrecioUnitario"],
+          listNumSeries: []
         });
-
+        this.addNumSerie(element["IDProducto"]);
         this.tempStocks.push({
           Producto: element["Nombre"],
           Stock: element["Stock_actual"]
         });
       }
     });
+    let minArray;
+    for (let i = 0; i < this.lista_items_paquete.length; i++) {
+      this.inventariosService
+        .getNumSerie(this.lista_items_paquete[i].Producto)
+        .subscribe((data: any) => {
+          this.lista_items_paquete[i].listNumSeries = data.records;
+          if (i == 0) {
+            minArray = Math.trunc(
+              this.lista_items_paquete[i].listNumSeries.length /
+                this.lista_items_paquete[i].Cantidad
+            );
+          } else {
+            if (
+              Math.trunc(
+                this.lista_items_paquete[i].listNumSeries.length /
+                  this.lista_items_paquete[i].Cantidad
+              ) < minArray
+            ) {
+              minArray = Math.trunc(
+                this.lista_items_paquete[i].listNumSeries.length /
+                  this.lista_items_paquete[i].Cantidad
+              );
+            }
+          }
+          this.cantidadMaximaProductos = minArray;
+        });
+    }
   }
   //
   precio(cantidad: number) {
-    let arraySeries: any[] = [];
-
     if (cantidad <= this.cantidadMaximaProductos) {
-      for (let i = 0; i < this.numSeries.length; i++) {
-        if (arraySeries.length == cantidad) {
-          break;
-        } else {
-          if (
-            this.numSeries[i].almacen ==
-            this.movimientoForm.get("AlmacenOrigen").value
-          ) {
-            arraySeries.push(this.numSeries[i].numSerie);
+      if (!this.isPaquete) {
+        let arraySeries: any[] = [];
+        for (let i = 0; i < this.numSeries.length; i++) {
+          if (arraySeries.length == cantidad) {
+            break;
+          } else {
+            if (
+              this.numSeries[i].almacen ==
+              this.movimientoForm.get("AlmacenOrigen").value
+            ) {
+              arraySeries.push(this.numSeries[i].numSerie);
+            }
           }
         }
-      }
-      if (
-        this.tipoMovimiento === "TRANSFERENCIA" ||
-        this.tipoMovimiento === "AJUSTE DE ENTRADA" ||
-        this.tipoMovimiento === "AJUSTE DE SALIDA"
-      ) {
-        this.movimientoForm.patchValue({ Precio: 0 });
-        this.seriesSelected.patchValue([]);
-      } else {
-        if (this.tipoMovimiento == "ENTRADA") {
+        if (
+          this.tipoMovimiento === "TRANSFERENCIA" ||
+          this.tipoMovimiento === "AJUSTE DE ENTRADA" ||
+          this.tipoMovimiento === "AJUSTE DE SALIDA"
+        ) {
+          this.movimientoForm.patchValue({ Precio: 0 });
           this.seriesSelected.patchValue([]);
         } else {
-          this.seriesSelected.patchValue(arraySeries);
+          if (this.tipoMovimiento == "ENTRADA") {
+            this.seriesSelected.patchValue([]);
+          } else {
+            this.seriesSelected.patchValue(arraySeries);
+          }
+          this.movimientoForm.patchValue({
+            Precio: cantidad * this.precioActual
+          });
         }
-        this.movimientoForm.patchValue({
-          Precio: cantidad * this.precioActual
-        });
+      } else {
+        for (let i = 0; i < this.lista_items_paquete.length; i++) {
+          let arraySeries: any[] = [];
+          for (
+            let j = 0;
+            j < this.lista_items_paquete[i].listNumSeries.length;
+            j++
+          ) {
+            if (
+              arraySeries.length ==
+              cantidad * this.lista_items_paquete[i].Cantidad
+            ) {
+              break;
+            } else {
+              if (
+                this.lista_items_paquete[i].listNumSeries[j].almacen ==
+                this.movimientoForm.get("AlmacenOrigen").value
+              ) {
+                arraySeries.push(
+                  this.lista_items_paquete[i].listNumSeries[j].numSerie
+                );
+              }
+            }
+          }
+          if (
+            this.tipoMovimiento === "TRANSFERENCIA" ||
+            this.tipoMovimiento === "AJUSTE DE ENTRADA" ||
+            this.tipoMovimiento === "AJUSTE DE SALIDA"
+          ) {
+            this.movimientoForm.patchValue({ Precio: 0 });
+            let numSeriesForm = this.formSelectNumSeries.get(
+              "numSeriesArray"
+            ) as FormArray;
+            numSeriesForm.controls[i].patchValue({
+              numSeriesSelected: []
+            });
+          } else {
+            if (this.tipoMovimiento == "ENTRADA") {
+              let numSeriesForm = this.formSelectNumSeries.get(
+                "numSeriesArray"
+              ) as FormArray;
+              numSeriesForm.controls[i].patchValue({
+                numSeriesSelected: []
+              });
+            } else {
+              let numSeriesForm = this.formSelectNumSeries.get(
+                "numSeriesArray"
+              ) as FormArray;
+              numSeriesForm.controls[i].patchValue({
+                numSeriesSelected: arraySeries
+              });
+            }
+            this.movimientoForm.patchValue({
+              Precio: cantidad * this.precioActual
+            });
+          }
+        }
       }
     }
   }
@@ -780,7 +906,6 @@ export class MovimientosComponent implements OnInit {
       });
       return;
     }
-
     this.docListName = "";
     this.docListSerie = "";
     this.docListCorrelativo = "";
@@ -801,29 +926,40 @@ export class MovimientosComponent implements OnInit {
     });
 
     if (this.packFlag) {
-      this.paquetes.forEach(element => {
+      let numSeriesForm = this.formSelectNumSeries.get(
+        "numSeriesArray"
+      ) as FormArray;
+      this.paquetes.forEach((element, i) => {
         if (this.movimientoForm.value["Paquete"] === element["Paquete"]) {
-          this.listaResumen.push({
-            Fecha: this.movimientoForm.value["Fecha"],
-            Documento: this.docListName,
-            Serie: this.docListSerie,
-            Correlativo: this.docListCorrelativo,
-            Tercero: this.movimientoForm.value["Tercero"],
-            AlmacenOrigen: this.movimientoForm.value["AlmacenOrigen"],
-            AlmacenDestino: this.movimientoForm.value["AlmacenDestino"],
-            IDProducto: element["IDProducto"],
-            Producto: element["Nombre"],
-            Paquete: element["Paquete"],
-            Unidad: element["Unidad"],
-            Moneda: element["Moneda"],
-            Cantidad:
-              parseFloat(element["Cantidad"]) *
-              parseFloat(this.movimientoForm.value["Cantidad"]),
-            Compra: element["Compra"],
-            Venta: element["PrecioUnitario"],
-            Movimiento: this.tipoMovimiento,
-            Usuario: this.uname
-          });
+          for (let j = 0; j < numSeriesForm.controls.length; j++) {
+            if (
+              numSeriesForm.controls[j].value.paquete == element["IDProducto"]
+            ) {
+              this.listaResumen.push({
+                Fecha: this.movimientoForm.value["Fecha"],
+                Documento: this.docListName,
+                Serie: this.docListSerie,
+                Correlativo: this.docListCorrelativo,
+                Tercero: this.movimientoForm.value["Tercero"],
+                AlmacenOrigen: this.movimientoForm.value["AlmacenOrigen"],
+                AlmacenDestino: this.movimientoForm.value["AlmacenDestino"],
+                IDProducto: element["IDProducto"],
+                Producto: element["Nombre"],
+                Paquete: element["Paquete"],
+                Unidad: element["Unidad"],
+                Moneda: element["Moneda"],
+                esPaquete: 1,
+                Cantidad:
+                  parseFloat(element["Cantidad"]) *
+                  parseFloat(this.movimientoForm.value["Cantidad"]),
+                Compra: element["Compra"],
+                Venta: element["PrecioUnitario"],
+                Movimiento: this.tipoMovimiento,
+                Usuario: this.uname,
+                Series: numSeriesForm.controls[j].value.numSeriesSelected
+              });
+            }
+          }
         }
       });
     } else if (!this.packFlag) {
@@ -834,6 +970,7 @@ export class MovimientosComponent implements OnInit {
         Correlativo: this.docListCorrelativo,
         Tercero: this.movimientoForm.value["Tercero"],
         AlmacenOrigen: this.movimientoForm.value["AlmacenOrigen"],
+        esPaquete: 0,
         AlmacenDestino: this.movimientoForm.value["AlmacenDestino"],
         IDProducto: this.idProductoActual,
         Producto: this.productName,
@@ -859,6 +996,10 @@ export class MovimientosComponent implements OnInit {
     this.calcMontoTotal();
     this.movimientoForm.patchValue({ Cantidad: "" });
     this.seriesSelected.patchValue([]);
+    this.movimientoForm.patchValue({
+      Paquete: ""
+    });
+    this.packActual("");
   }
 
   calcMontoTotal() {
@@ -884,9 +1025,11 @@ export class MovimientosComponent implements OnInit {
         _resumen.push({
           ID: element["IDProducto"],
           Producto: element["Producto"],
+          Paquete: element["Paquete"],
           Cantidad: parseFloat(element["Cantidad"]),
           Origen: element["AlmacenOrigen"],
           Destino: element["AlmacenDestino"],
+          esPaquete: element["esPaquete"],
           Series: element["Series"]
         });
         _item.push(element["Producto"]);
@@ -933,8 +1076,8 @@ export class MovimientosComponent implements OnInit {
       for (let i = 0; i < _resumen.length; i++) {
         for (let j = 0; j < this.productos.length; j++) {
           if (
-            _resumen[i]["ID"] === this.productos[j]["Codigo"] &&
-            _resumen[i]["Origen"] === this.productos[j]["Zona"]
+            _resumen[i]["ID"] == this.productos[j]["ID"] &&
+            _resumen[i]["Origen"] == this.productos[j]["Zona"]
           ) {
             if (
               this.listaResumen[0]["Movimiento"] === "SALIDA" ||
@@ -1002,11 +1145,17 @@ export class MovimientosComponent implements OnInit {
         Cantidad: ""
       });
       this.seriesSelected.patchValue([]);
+      this.formSelectNumSeries = this.fb.group({
+        numSeriesArray: this.fb.array([])
+      });
       this.productName = null;
       this.prodEscogido = undefined;
       this.lista_items_paquete = [];
       this.movimientoForm.controls["Serie"].setErrors(null);
       this.movimientoForm.controls["Documento"].setErrors(null);
+      this.movimientoForm.controls["Cantidad"].setErrors(null);
+      this.movimientoForm.controls["Tercero"].setErrors(null);
+      this.movimientoForm.controls["AlmacenOrigen"].setErrors(null);
     }
   }
 

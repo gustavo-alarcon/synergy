@@ -65,7 +65,6 @@ export class InventariosService {
       .pipe(takeWhile(() => this.alive))
       .subscribe(res => {
         this.db = res[0]["Db"];
-        console.log(this.db);
         this.getAlmacenes();
         this.getTerceros();
         this.getDocumentos();
@@ -623,7 +622,6 @@ export class InventariosService {
       cambios: cambios,
       original: original
     };
-    console.log(data);
     this.http2
       .post(
         /*"http://www.meraki-s.com/rent/ms-synergy/php/handler-productos-mod.php?db=" */
@@ -635,7 +633,6 @@ export class InventariosService {
       .pipe(takeWhile(() => this.alive))
       .subscribe(
         res => {
-          console.log(res);
           this.toastr.success(res, "Exito");
           this.getProductos();
         },
@@ -812,8 +809,6 @@ export class InventariosService {
         },
         err => {
           this.toastr.error("Error de conexión ", "Error");
-          console.log(err);
-          console.log(err);
           this.queryLoading(false);
         }
       );

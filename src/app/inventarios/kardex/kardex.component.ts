@@ -73,6 +73,7 @@ export class KardexComponent implements OnInit {
 
     this.inventariosService.currentDataProductos.subscribe(res => {
       this.productos = res;
+      console.log(this.productos);
       this.productos.sort(this.sortBy("Nombre"));
     });
   }
@@ -94,14 +95,14 @@ export class KardexComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       } else {
         if (currentDate.getMonth() + 1 < 10) {
@@ -110,40 +111,40 @@ export class KardexComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       }
     } else {
       if (currentDate.getMonth() + 1 < 12) {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }
       } else {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             1 +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
@@ -151,7 +152,7 @@ export class KardexComponent implements OnInit {
             currentDate.getFullYear() +
             1 +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }
@@ -204,11 +205,11 @@ export class KardexComponent implements OnInit {
   onSubmit() {
     this.consulta = false;
     this.kardex = [];
+    console.log(this.kardexForm.value);
     this.inventariosService.consultaKardex(this.kardexForm.value);
 
     this.inventariosService.currentDataKardex.subscribe(res => {
-      this.kardex = res;
-
+      this.kardex = JSON.parse(JSON.stringify(res));
       this.kardex.unshift({
         Fecha: "",
         Documento: "STOCK INICIAL",

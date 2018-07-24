@@ -131,6 +131,7 @@ export class PaymentComponent implements OnInit {
 
   confirmSale() {
     this.isLoadingResults = true;
+    console.log(JSON.parse(JSON.stringify(this.customer)));
     this.customer.date = this.currentDate();
     this.customer.given = this.entregado;
     this.customer.change = this.vuelto;
@@ -138,6 +139,7 @@ export class PaymentComponent implements OnInit {
       .regMovimiento(this.bd, this.customer)
       .pipe(takeWhile(() => this.alive))
       .subscribe(data => {
+        console.log(data);
         for (let i = 0; i < this.salesArray.length; i++) {
           this.posService
             .actualizarStock(this.bd, this.salesArray[i])

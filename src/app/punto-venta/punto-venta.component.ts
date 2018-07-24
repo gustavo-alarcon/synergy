@@ -212,14 +212,18 @@ export class PuntoVentaComponent implements OnInit {
           i++
         ) {
           this.addNumSerie();
-          let numSeriesForm = this.formSelectNumSeries.get(
-            "numSeriesArray"
-          ) as FormArray;
-          numSeriesForm.controls[i].patchValue({
-            numSeriesSelected: this.listCustomers[this.currentCustomer]
-              .listAction[i].seriesSelected
-          });
-          this.isLoadingResultsCheck.push(false);
+          if (
+            this.listCustomers[this.currentCustomer].listAction[i].package == 0
+          ) {
+            let numSeriesForm = this.formSelectNumSeries.get(
+              "numSeriesArray"
+            ) as FormArray;
+            numSeriesForm.controls[i].patchValue({
+              numSeriesSelected: this.listCustomers[this.currentCustomer]
+                .listAction[i].seriesSelected
+            });
+            this.isLoadingResultsCheck.push(false);
+          }
         }
         /*for (
           let i = 0;
@@ -305,7 +309,7 @@ export class PuntoVentaComponent implements OnInit {
     });
   }
 
-  addNumSerie(): void {
+  addNumSerie(isPackage?): void {
     this.numSeriesInProduct = this.formSelectNumSeries.get(
       "numSeriesArray"
     ) as FormArray;
@@ -430,42 +434,97 @@ export class PuntoVentaComponent implements OnInit {
               this.listCustomers[this.currentCustomer].listAction[i].units =
                 this.listCustomers[this.currentCustomer].listAction[i].units +
                 int;
-              let numSeriesSeleccionados = [];
-              for (
-                let j = 0;
-                j <
+              if (
                 this.listCustomers[this.currentCustomer].listAction[i]
-                  .listNumSeries.length;
-                j++
+                  .package == 0
               ) {
-                if (
-                  numSeriesSeleccionados.length ==
-                  parseInt(
-                    this.listCustomers[this.currentCustomer].listAction[i].units
-                  )
+                let numSeriesSeleccionados = [];
+                for (
+                  let j = 0;
+                  j <
+                  this.listCustomers[this.currentCustomer].listAction[i]
+                    .listNumSeries.length;
+                  j++
                 ) {
-                  break;
-                } else {
                   if (
-                    this.listCustomers[this.currentCustomer].listAction[i]
-                      .listNumSeries[j].almacen == this.selectedWarehouse
-                  ) {
-                    numSeriesSeleccionados.push(
+                    numSeriesSeleccionados.length ==
+                    parseInt(
                       this.listCustomers[this.currentCustomer].listAction[i]
-                        .listNumSeries[j].numSerie
-                    );
+                        .units
+                    )
+                  ) {
+                    break;
+                  } else {
+                    if (
+                      this.listCustomers[this.currentCustomer].listAction[i]
+                        .listNumSeries[j].almacen == this.selectedWarehouse
+                    ) {
+                      numSeriesSeleccionados.push(
+                        this.listCustomers[this.currentCustomer].listAction[i]
+                          .listNumSeries[j].numSerie
+                      );
+                    }
                   }
                 }
+                let numSeriesForm = this.formSelectNumSeries.get(
+                  "numSeriesArray"
+                ) as FormArray;
+                numSeriesForm.controls[i].patchValue({
+                  numSeriesSelected: numSeriesSeleccionados
+                });
+                this.listCustomers[this.currentCustomer].listAction[
+                  i
+                ].seriesSelected = numSeriesSeleccionados;
+              } else {
+                for (
+                  let indexProducto = 0;
+                  indexProducto <
+                  this.listCustomers[this.currentCustomer].listAction[i]
+                    .products.length;
+                  indexProducto++
+                ) {
+                  let numSeriesSeleccionados = [];
+                  for (
+                    let indexSerie = 0;
+                    indexSerie <
+                    this.listCustomers[this.currentCustomer].listAction[i]
+                      .products[indexProducto].listNumSeries.length;
+                    indexSerie++
+                  ) {
+                    if (
+                      numSeriesSeleccionados.length ==
+                      parseInt(
+                        this.listCustomers[this.currentCustomer].listAction[i]
+                          .units
+                      ) *
+                        parseInt(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .products[indexProducto].cantidad
+                        )
+                    ) {
+                      break;
+                    } else {
+                      if (
+                        this.listCustomers[this.currentCustomer].listAction[i]
+                          .products[indexProducto].listNumSeries[indexSerie]
+                          .almacen == this.selectedWarehouse
+                      ) {
+                        numSeriesSeleccionados.push(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .products[indexProducto].listNumSeries[indexSerie]
+                            .numSerie
+                        );
+                      }
+                    }
+                  }
+                  this.listCustomers[this.currentCustomer].listAction[
+                    i
+                  ].products[indexProducto].seriesSelected = JSON.parse(
+                    JSON.stringify(numSeriesSeleccionados)
+                  );
+                }
+                this.cd.markForCheck();
               }
-              let numSeriesForm = this.formSelectNumSeries.get(
-                "numSeriesArray"
-              ) as FormArray;
-              numSeriesForm.controls[i].patchValue({
-                numSeriesSelected: numSeriesSeleccionados
-              });
-              this.listCustomers[this.currentCustomer].listAction[
-                i
-              ].seriesSelected = numSeriesSeleccionados;
               if (this.verifyValue(i)) {
                 this.listCustomers[this.currentCustomer].listAction[i].price =
                   parseFloat(
@@ -823,45 +882,103 @@ export class PuntoVentaComponent implements OnInit {
                 ].units = this.listCustomers[this.currentCustomer].listAction[
                   i
                 ].units.slice(0, -1);
-                let numSeriesSeleccionados = [];
-                for (
-                  let j = 0;
-                  j <
+                if (
                   this.listCustomers[this.currentCustomer].listAction[i]
-                    .listNumSeries.length;
-                  j++
+                    .package == 0
                 ) {
-                  if (
-                    numSeriesSeleccionados.length ==
-                      parseInt(
-                        this.listCustomers[this.currentCustomer].listAction[i]
-                          .units
-                      ) ||
+                  let numSeriesSeleccionados = [];
+                  for (
+                    let j = 0;
+                    j <
                     this.listCustomers[this.currentCustomer].listAction[i]
-                      .units == ""
+                      .listNumSeries.length;
+                    j++
                   ) {
-                    break;
-                  } else {
                     if (
+                      numSeriesSeleccionados.length ==
+                        parseInt(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .units
+                        ) ||
                       this.listCustomers[this.currentCustomer].listAction[i]
-                        .listNumSeries[j].almacen == this.selectedWarehouse
+                        .units == ""
                     ) {
-                      numSeriesSeleccionados.push(
+                      break;
+                    } else {
+                      if (
                         this.listCustomers[this.currentCustomer].listAction[i]
-                          .listNumSeries[j].numSerie
-                      );
+                          .listNumSeries[j].almacen == this.selectedWarehouse
+                      ) {
+                        numSeriesSeleccionados.push(
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .listNumSeries[j].numSerie
+                        );
+                      }
                     }
                   }
+                  let numSeriesForm = this.formSelectNumSeries.get(
+                    "numSeriesArray"
+                  ) as FormArray;
+                  numSeriesForm.controls[i].patchValue({
+                    numSeriesSelected: numSeriesSeleccionados
+                  });
+                  this.listCustomers[this.currentCustomer].listAction[
+                    i
+                  ].seriesSelected = numSeriesSeleccionados;
+                } else {
+                  for (
+                    let indexProducto = 0;
+                    indexProducto <
+                    this.listCustomers[this.currentCustomer].listAction[i]
+                      .products.length;
+                    indexProducto++
+                  ) {
+                    let numSeriesSeleccionados = [];
+                    for (
+                      let indexSerie = 0;
+                      indexSerie <
+                      this.listCustomers[this.currentCustomer].listAction[i]
+                        .products[indexProducto].listNumSeries.length;
+                      indexSerie++
+                    ) {
+                      if (
+                        numSeriesSeleccionados.length ==
+                          parseInt(
+                            this.listCustomers[this.currentCustomer].listAction[
+                              i
+                            ].units
+                          ) *
+                            parseInt(
+                              this.listCustomers[this.currentCustomer]
+                                .listAction[i].products[indexProducto].cantidad
+                            ) ||
+                        this.listCustomers[this.currentCustomer].listAction[i]
+                          .units == ""
+                      ) {
+                        break;
+                      } else {
+                        if (
+                          this.listCustomers[this.currentCustomer].listAction[i]
+                            .products[indexProducto].listNumSeries[indexSerie]
+                            .almacen == this.selectedWarehouse
+                        ) {
+                          numSeriesSeleccionados.push(
+                            this.listCustomers[this.currentCustomer].listAction[
+                              i
+                            ].products[indexProducto].listNumSeries[indexSerie]
+                              .numSerie
+                          );
+                        }
+                      }
+                    }
+                    this.listCustomers[this.currentCustomer].listAction[
+                      i
+                    ].products[
+                      indexProducto
+                    ].seriesSelected = numSeriesSeleccionados;
+                  }
+                  this.cd.markForCheck();
                 }
-                let numSeriesForm = this.formSelectNumSeries.get(
-                  "numSeriesArray"
-                ) as FormArray;
-                numSeriesForm.controls[i].patchValue({
-                  numSeriesSelected: numSeriesSeleccionados
-                });
-                this.listCustomers[this.currentCustomer].listAction[
-                  i
-                ].seriesSelected = numSeriesSeleccionados;
                 if (this.verifyValue(i)) {
                   if (
                     this.listCustomers[this.currentCustomer].listAction[i]
@@ -1664,50 +1781,86 @@ export class PuntoVentaComponent implements OnInit {
           );
           this.cd.markForCheck();
           this.addNumSerie();
-          this.isLoadingResultsCheck.push(true);
-          this.posService
-            .getNumSerie(this.bd, this.productos_filtrado[i].Nombre)
-            .pipe(takeWhile(() => this.alive))
-            .subscribe(
-              data => {
+          let minArray;
+          for (
+            let index = 0;
+            index <
+            this.listCustomers[this.currentCustomer].listAction[
+              this.listCustomers[this.currentCustomer].listAction.length - 1
+            ].products.length;
+            index++
+          ) {
+            this.isLoadingResultsCheck.push(true);
+            this.posService
+              .getNumSerie(
+                this.bd,
                 this.listCustomers[this.currentCustomer].listAction[
                   this.listCustomers[this.currentCustomer].listAction.length - 1
-                ].listNumSeries =
-                  data.records;
-                for (
-                  let i = 0;
-                  i <
+                ].products[index].nombre
+              )
+              .pipe(takeWhile(() => this.alive))
+              .subscribe(
+                data => {
                   this.listCustomers[this.currentCustomer].listAction[
                     this.listCustomers[this.currentCustomer].listAction.length -
                       1
-                  ].listNumSeries.length;
-                  i++
-                ) {
-                  if (
-                    this.listCustomers[this.currentCustomer].listAction[
-                      this.listCustomers[this.currentCustomer].listAction
-                        .length - 1
-                    ].listNumSeries[i].almacen == this.selectedWarehouse
-                  ) {
-                    this.listCustomers[this.currentCustomer].listAction[
-                      this.listCustomers[this.currentCustomer].listAction
-                        .length - 1
-                    ].cantidadMaxima++;
+                  ].products[index].listNumSeries =
+                    data.records;
+                  if (index == 0) {
+                    minArray = Math.trunc(
+                      this.listCustomers[this.currentCustomer].listAction[
+                        this.listCustomers[this.currentCustomer].listAction
+                          .length - 1
+                      ].products[index].listNumSeries.length /
+                        this.listCustomers[this.currentCustomer].listAction[
+                          this.listCustomers[this.currentCustomer].listAction
+                            .length - 1
+                        ].products[index].cantidad
+                    );
+                  } else {
+                    if (
+                      Math.trunc(
+                        this.listCustomers[this.currentCustomer].listAction[
+                          this.listCustomers[this.currentCustomer].listAction
+                            .length - 1
+                        ].products[index].listNumSeries.length /
+                          this.listCustomers[this.currentCustomer].listAction[
+                            this.listCustomers[this.currentCustomer].listAction
+                              .length - 1
+                          ].products[index].cantidad
+                      ) < minArray
+                    ) {
+                      minArray = Math.trunc(
+                        this.listCustomers[this.currentCustomer].listAction[
+                          this.listCustomers[this.currentCustomer].listAction
+                            .length - 1
+                        ].products[index].listNumSeries.length /
+                          this.listCustomers[this.currentCustomer].listAction[
+                            this.listCustomers[this.currentCustomer].listAction
+                              .length - 1
+                          ].products[index].cantidad
+                      );
+                    }
                   }
+                  this.listCustomers[this.currentCustomer].listAction[
+                    this.listCustomers[this.currentCustomer].listAction.length -
+                      1
+                  ].cantidadMaxima = minArray;
+                  this.isLoadingResultsCheck[
+                    this.listCustomers[this.currentCustomer].listAction.length -
+                      1
+                  ] = false;
+                  this.cd.markForCheck();
+                },
+                err => {
+                  this.isLoadingResultsCheck[
+                    this.listCustomers[this.currentCustomer].listAction.length -
+                      1
+                  ] = false;
+                  this.cd.markForCheck();
                 }
-                this.isLoadingResultsCheck[
-                  this.listCustomers[this.currentCustomer].listAction.length - 1
-                ] = false;
-                this.cd.markForCheck();
-              },
-              err => {
-                this.isLoadingResultsCheck[
-                  this.listCustomers[this.currentCustomer].listAction.length - 1
-                ] = false;
-                this.cd.markForCheck();
-              }
-            );
-          console.log(this.listCustomers[this.currentCustomer].listAction);
+              );
+          }
         } else {
           this.toastr.warning(
             "El paquete ya esta en la lista de venta, haga click en el para aumentar la cantidad",
