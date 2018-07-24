@@ -1012,6 +1012,7 @@ export class MovimientosComponent implements OnInit {
           : element.Venta * element.Cantidad);
     });
   }
+  io;
 
   regMovimiento() {
     let _resumen = [];
@@ -1073,47 +1074,108 @@ export class MovimientosComponent implements OnInit {
       registrar = false;
     }
     if (registrar) {
+      console.log(_resumen);
+      console.log(this.productos);
       for (let i = 0; i < _resumen.length; i++) {
         for (let j = 0; j < this.productos.length; j++) {
-          if (
-            _resumen[i]["ID"] == this.productos[j]["ID"] &&
-            _resumen[i]["Origen"] == this.productos[j]["Zona"]
-          ) {
+          if (_resumen[i]["esPaquete"] == 0) {
             if (
-              this.listaResumen[0]["Movimiento"] === "SALIDA" ||
-              this.listaResumen[0]["Movimiento"] === "AJUSTE DE SALIDA"
+              _resumen[i]["ID"] == this.productos[j]["Codigo"] &&
+              _resumen[i]["Origen"] == this.productos[j]["Zona"]
             ) {
-              //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) - parseInt(_resumen[i]['Cantidad']);
-              //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
-              //this.inventariosService.modificarProducto(this.productos[j]);
-              this.stockData["ID"] = this.productos[j]["ID"];
-              this.stockData["Cantidad"] =
-                parseFloat(_resumen[i]["Cantidad"]) * -1;
-              this.inventariosService.actualizarStock(this.stockData);
-            } else if (
-              this.listaResumen[0]["Movimiento"] === "ENTRADA" ||
-              this.listaResumen[0]["Movimiento"] === "AJUSTE DE ENTRADA"
-            ) {
-              //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) + parseInt(_resumen[i]['Cantidad']);
-              //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
-              //this.inventariosService.modificarProducto(this.productos[j]);
-              this.stockData["ID"] = this.productos[j]["ID"];
-              this.stockData["Cantidad"] = parseFloat(_resumen[i]["Cantidad"]);
-              this.inventariosService.actualizarStock(this.stockData);
-            } else if (this.listaResumen[0]["Movimiento"] == "TRANSFERENCIA") {
+              console.log("entro");
               if (
-                this.productos[j]["Stock_actual"] >=
-                parseFloat(_resumen[i]["Cantidad"])
+                this.listaResumen[0]["Movimiento"] === "SALIDA" ||
+                this.listaResumen[0]["Movimiento"] === "AJUSTE DE SALIDA"
               ) {
-                this.inventariosService.transferirProducto(_resumen[i]);
-              } else {
-                this.snackBar.open(
-                  "No se puede transferir esta cantidad",
-                  "Cerrar",
-                  {
-                    duration: 4000
-                  }
+                //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) - parseInt(_resumen[i]['Cantidad']);
+                //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
+                //this.inventariosService.modificarProducto(this.productos[j]);
+                this.stockData["ID"] = this.productos[j]["ID"];
+                this.stockData["Cantidad"] =
+                  parseFloat(_resumen[i]["Cantidad"]) * -1;
+                console.log(this.stockData);
+                this.inventariosService.actualizarStock(this.stockData);
+              } else if (
+                this.listaResumen[0]["Movimiento"] === "ENTRADA" ||
+                this.listaResumen[0]["Movimiento"] === "AJUSTE DE ENTRADA"
+              ) {
+                //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) + parseInt(_resumen[i]['Cantidad']);
+                //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
+                //this.inventariosService.modificarProducto(this.productos[j]);
+                this.stockData["ID"] = this.productos[j]["ID"];
+                this.stockData["Cantidad"] = parseFloat(
+                  _resumen[i]["Cantidad"]
                 );
+                console.log(this.stockData);
+                this.inventariosService.actualizarStock(this.stockData);
+              } else if (
+                this.listaResumen[0]["Movimiento"] == "TRANSFERENCIA"
+              ) {
+                if (
+                  this.productos[j]["Stock_actual"] >=
+                  parseFloat(_resumen[i]["Cantidad"])
+                ) {
+                  this.inventariosService.transferirProducto(_resumen[i]);
+                } else {
+                  this.snackBar.open(
+                    "No se puede transferir esta cantidad",
+                    "Cerrar",
+                    {
+                      duration: 4000
+                    }
+                  );
+                }
+              }
+            }
+          } else {
+            if (
+              _resumen[i]["ID"] == this.productos[j]["ID"] &&
+              _resumen[i]["Origen"] == this.productos[j]["Zona"]
+            ) {
+              console.log("entro");
+              if (
+                this.listaResumen[0]["Movimiento"] === "SALIDA" ||
+                this.listaResumen[0]["Movimiento"] === "AJUSTE DE SALIDA"
+              ) {
+                //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) - parseInt(_resumen[i]['Cantidad']);
+                //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
+                //this.inventariosService.modificarProducto(this.productos[j]);
+                this.stockData["ID"] = this.productos[j]["ID"];
+                this.stockData["Cantidad"] =
+                  parseFloat(_resumen[i]["Cantidad"]) * -1;
+                console.log(this.stockData);
+                this.inventariosService.actualizarStock(this.stockData);
+              } else if (
+                this.listaResumen[0]["Movimiento"] === "ENTRADA" ||
+                this.listaResumen[0]["Movimiento"] === "AJUSTE DE ENTRADA"
+              ) {
+                //this.productos[j]['Stock_actual'] = parseInt(this.productos[j]['Stock_actual']) + parseInt(_resumen[i]['Cantidad']);
+                //console.log('Cantidad enviada',this.productos[j]['Stock_actual']);
+                //this.inventariosService.modificarProducto(this.productos[j]);
+                this.stockData["ID"] = this.productos[j]["ID"];
+                this.stockData["Cantidad"] = parseFloat(
+                  _resumen[i]["Cantidad"]
+                );
+                console.log(this.stockData);
+                this.inventariosService.actualizarStock(this.stockData);
+              } else if (
+                this.listaResumen[0]["Movimiento"] == "TRANSFERENCIA"
+              ) {
+                if (
+                  this.productos[j]["Stock_actual"] >=
+                  parseFloat(_resumen[i]["Cantidad"])
+                ) {
+                  this.inventariosService.transferirProducto(_resumen[i]);
+                } else {
+                  this.snackBar.open(
+                    "No se puede transferir esta cantidad",
+                    "Cerrar",
+                    {
+                      duration: 4000
+                    }
+                  );
+                }
               }
             }
           }
