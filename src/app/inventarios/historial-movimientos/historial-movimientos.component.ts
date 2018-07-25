@@ -71,35 +71,41 @@ export class HistorialMovimientosComponent implements OnInit {
       .pipe(takeWhile(() => this.alive))
       .subscribe(
         data => {
-          console.log(data);
           for (let i = 0; i < data.records.length; i++) {
-            this.history.push({
-              Correlativo: parseInt(data.records[i].Correlativo),
-              Serie: data.records[i].Serie,
-              Documento: data.records[i].Documento,
-              Operacion: data.records[i].Operacion,
-              Fecha: data.records[i].Fecha,
-              Usuario: data.records[i].Usuario,
-              Estado: data.records[i].Estado,
-              Total: data.records[i].Total,
-              IGV: data.records[i].IGV,
-              Entregado: data.records[i].Entregado,
-              Vuelto: data.records[i].Vuelto,
-              TipoIGV: data.records[i].Tipo_igv,
-              TipoPago: data.records[i].TipoPago,
-              SubTotal: data.records[i].SubTotal,
-              AlmacenDestino: data.records[i].Almacen_destino,
-              AlmacenOrigen: data.records[i].Almacen_origen,
-              Cantidad: data.records[i].Cantidad,
-              Compra: data.records[i].Compra,
-              Moneda: data.records[i].Moneda,
-              Movimiento: data.records[i].Movimiento,
-              Tercero: data.records[i].Tercero,
-              Venta: data.records[i].Venta,
-              POS: data.records[i].POS
-            });
+            let alreadyIn = false;
+            for (let j = 0; j < this.history.length; j++) {
+              if (data.records[i].Operacion == this.history[j].Operacion) {
+                alreadyIn = true;
+              }
+            }
+            if (!alreadyIn) {
+              this.history.push({
+                Correlativo: parseInt(data.records[i].Correlativo),
+                Serie: data.records[i].Serie,
+                Documento: data.records[i].Documento,
+                Operacion: data.records[i].Operacion,
+                Fecha: data.records[i].Fecha,
+                Usuario: data.records[i].Usuario,
+                Estado: data.records[i].Estado,
+                Total: data.records[i].Total,
+                IGV: data.records[i].IGV,
+                Entregado: data.records[i].Entregado,
+                Vuelto: data.records[i].Vuelto,
+                TipoIGV: data.records[i].Tipo_igv,
+                TipoPago: data.records[i].TipoPago,
+                SubTotal: data.records[i].SubTotal,
+                AlmacenDestino: data.records[i].Almacen_destino,
+                AlmacenOrigen: data.records[i].Almacen_origen,
+                Cantidad: data.records[i].Cantidad,
+                Compra: data.records[i].Compra,
+                Moneda: data.records[i].Moneda,
+                Movimiento: data.records[i].Movimiento,
+                Tercero: data.records[i].Tercero,
+                Venta: data.records[i].Venta,
+                POS: data.records[i].POS
+              });
+            }
           }
-          console.log(this.history);
           this.isLoadingResults = false;
           this.dataSource = new MatTableDataSource(this.history);
           this.dataSource.paginator = this.paginator;

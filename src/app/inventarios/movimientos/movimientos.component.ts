@@ -757,21 +757,31 @@ export class MovimientosComponent implements OnInit {
         .getNumSerie(this.lista_items_paquete[i].Producto)
         .subscribe((data: any) => {
           this.lista_items_paquete[i].listNumSeries = data.records;
+          let seriesInAlmacen = 0;
+          for (
+            let count = 0;
+            count < this.lista_items_paquete[i].listNumSeries.length;
+            count++
+          ) {
+            if (
+              this.lista_items_paquete[i].listNumSeries[count].almacen ==
+              this.movimientoForm.get("AlmacenOrigen").value
+            ) {
+              seriesInAlmacen++;
+            }
+          }
           if (i == 0) {
             minArray = Math.trunc(
-              this.lista_items_paquete[i].listNumSeries.length /
-                this.lista_items_paquete[i].Cantidad
+              seriesInAlmacen / this.lista_items_paquete[i].Cantidad
             );
           } else {
             if (
               Math.trunc(
-                this.lista_items_paquete[i].listNumSeries.length /
-                  this.lista_items_paquete[i].Cantidad
+                seriesInAlmacen / this.lista_items_paquete[i].Cantidad
               ) < minArray
             ) {
               minArray = Math.trunc(
-                this.lista_items_paquete[i].listNumSeries.length /
-                  this.lista_items_paquete[i].Cantidad
+                seriesInAlmacen / this.lista_items_paquete[i].Cantidad
               );
             }
           }
@@ -1074,8 +1084,6 @@ export class MovimientosComponent implements OnInit {
       registrar = false;
     }
     if (registrar) {
-      console.log(_resumen);
-      console.log(this.productos);
       for (let i = 0; i < _resumen.length; i++) {
         for (let j = 0; j < this.productos.length; j++) {
           if (_resumen[i]["esPaquete"] == 0) {
@@ -1083,7 +1091,6 @@ export class MovimientosComponent implements OnInit {
               _resumen[i]["ID"] == this.productos[j]["Codigo"] &&
               _resumen[i]["Origen"] == this.productos[j]["Zona"]
             ) {
-              console.log("entro");
               if (
                 this.listaResumen[0]["Movimiento"] === "SALIDA" ||
                 this.listaResumen[0]["Movimiento"] === "AJUSTE DE SALIDA"
@@ -1094,7 +1101,6 @@ export class MovimientosComponent implements OnInit {
                 this.stockData["ID"] = this.productos[j]["ID"];
                 this.stockData["Cantidad"] =
                   parseFloat(_resumen[i]["Cantidad"]) * -1;
-                console.log(this.stockData);
                 this.inventariosService.actualizarStock(this.stockData);
               } else if (
                 this.listaResumen[0]["Movimiento"] === "ENTRADA" ||
@@ -1107,7 +1113,6 @@ export class MovimientosComponent implements OnInit {
                 this.stockData["Cantidad"] = parseFloat(
                   _resumen[i]["Cantidad"]
                 );
-                console.log(this.stockData);
                 this.inventariosService.actualizarStock(this.stockData);
               } else if (
                 this.listaResumen[0]["Movimiento"] == "TRANSFERENCIA"
@@ -1133,7 +1138,6 @@ export class MovimientosComponent implements OnInit {
               _resumen[i]["ID"] == this.productos[j]["ID"] &&
               _resumen[i]["Origen"] == this.productos[j]["Zona"]
             ) {
-              console.log("entro");
               if (
                 this.listaResumen[0]["Movimiento"] === "SALIDA" ||
                 this.listaResumen[0]["Movimiento"] === "AJUSTE DE SALIDA"
@@ -1144,7 +1148,6 @@ export class MovimientosComponent implements OnInit {
                 this.stockData["ID"] = this.productos[j]["ID"];
                 this.stockData["Cantidad"] =
                   parseFloat(_resumen[i]["Cantidad"]) * -1;
-                console.log(this.stockData);
                 this.inventariosService.actualizarStock(this.stockData);
               } else if (
                 this.listaResumen[0]["Movimiento"] === "ENTRADA" ||
@@ -1157,7 +1160,6 @@ export class MovimientosComponent implements OnInit {
                 this.stockData["Cantidad"] = parseFloat(
                   _resumen[i]["Cantidad"]
                 );
-                console.log(this.stockData);
                 this.inventariosService.actualizarStock(this.stockData);
               } else if (
                 this.listaResumen[0]["Movimiento"] == "TRANSFERENCIA"

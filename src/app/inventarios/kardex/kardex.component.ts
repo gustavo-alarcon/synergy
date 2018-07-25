@@ -72,6 +72,7 @@ export class KardexComponent implements OnInit {
       Fecha: ["", Validators.required],
       Almacen: ["", Validators.required],
       IDProd: ["", Validators.required],
+      ID: "",
       Unidad: ""
     });
 
@@ -94,7 +95,6 @@ export class KardexComponent implements OnInit {
 
     this.inventariosService.currentDataProductos.subscribe(res => {
       this.productos = res;
-      console.log(this.productos);
       this.productos.sort(this.sortBy("Nombre"));
     });
   }
@@ -224,9 +224,18 @@ export class KardexComponent implements OnInit {
   }
 
   onSubmit() {
+    for (let i = 0; i < this.productos.length; i++) {
+      if (
+        this.productos[i].Codigo == this.kardexForm.get("IDProd").value &&
+        this.productos[i].Zona == this.kardexForm.get("Almacen").value
+      ) {
+        this.kardexForm.patchValue({
+          ID: this.productos[i].ID
+        });
+      }
+    }
     this.consulta = false;
     this.kardex = [];
-    console.log(this.kardexForm.value);
     this.inventariosService.consultaKardex(this.kardexForm.value);
 
     this.inventariosService.currentDataKardex.subscribe(res => {
