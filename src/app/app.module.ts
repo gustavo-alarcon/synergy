@@ -127,6 +127,13 @@ import { HistorialDetalleComponent } from "./produccion/historial-detalle/histor
 import { GenerarOrcComponent } from "./produccion/generar-orc/generar-orc.component";
 import { ConfirmarOrcComponent } from "./produccion/confirmar-orc/confirmar-orc.component";
 import { CrearClienteProduccionComponent } from "./produccion/generar-opp/crear-cliente-produccion/crear-cliente-produccion.component";
+import { ListaPedidosComponent } from "./pedidos/lista-pedidos/lista-pedidos.component";
+import { ListaPedidosPagarComponent } from "./pedidos/lista-pedidos-pagar/lista-pedidos-pagar.component";
+import { ModalPagarComponent } from "./pedidos/lista-pedidos-pagar/modal-pagar/modal-pagar.component";
+import { MenuPedidosComponent } from "./pedidos/menu-pedidos/menu-pedidos.component";
+import { CajaPedidosComponent } from "./pedidos/caja-pedidos/caja-pedidos.component";
+import { ClientesPedidosComponent } from "./pedidos/caja-pedidos/clientes-pedidos/clientes-pedidos.component";
+import { AddClientesPedidosComponent } from "./pedidos/caja-pedidos/clientes-pedidos/add-clientes-pedidos/add-clientes-pedidos.component";
 
 @NgModule({
   declarations: [
@@ -196,7 +203,14 @@ import { CrearClienteProduccionComponent } from "./produccion/generar-opp/crear-
     HistorialDetalleComponent,
     GenerarOrcComponent,
     ConfirmarOrcComponent,
-    CrearClienteProduccionComponent
+    CrearClienteProduccionComponent,
+    ListaPedidosComponent,
+    ListaPedidosPagarComponent,
+    ModalPagarComponent,
+    MenuPedidosComponent,
+    CajaPedidosComponent,
+    ClientesPedidosComponent,
+    AddClientesPedidosComponent
   ],
   imports: [
     BrowserModule,
@@ -265,7 +279,10 @@ import { CrearClienteProduccionComponent } from "./produccion/generar-opp/crear-
     VerOppComponent,
     ProcesosCrearComponent,
     ProcesosRelacionarComponent,
-    HistorialDetalleComponent
+    HistorialDetalleComponent,
+    ClientesPedidosComponent,
+    ModalPagarComponent,
+    AddClientesPedidosComponent
   ],
   providers: [
     LoginService,

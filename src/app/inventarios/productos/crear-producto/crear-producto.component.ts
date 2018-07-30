@@ -125,6 +125,9 @@ export class CrearProductoComponent implements OnInit {
         Compra: this.crearProductoForm.value["Compra"].toFixed(2),
         Venta: this.crearProductoForm.value["Venta"].toFixed(2)
       });
+      this.crearProductoForm.patchValue({
+        Nombre: this.crearProductoForm.get("Nombre").value.trim()
+      });
       this.inventariosService.crearProducto(this.crearProductoForm.value);
       if (this.images) {
         this.inventariosService

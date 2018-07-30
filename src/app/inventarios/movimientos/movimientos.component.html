@@ -221,40 +221,59 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="w3-row" *ngFor="let item of lista_items_paquete">
-                            <div class="w3-quarter">
-                                <mat-form-field color="accent" style="width:100%">
-                                    <input matInput type="text" [value]="item.Producto" placeholder="Producto" disabled>
-                                    <mat-hint>
-                                        <strong>{{ item.Unidad }}</strong>
-                                    </mat-hint>
-                                </mat-form-field>
+                        <span [formGroup]="formSelectNumSeries">
+                            <div class="w3-row flexRow" *ngFor="let item of lista_items_paquete; let i = index" formArrayName="numSeriesArray">
+                                <div class="fifth">
+                                    <mat-form-field color="accent" style="width:100%">
+                                        <input matInput type="text" [value]="item.Producto" placeholder="Producto" disabled>
+                                        <mat-hint>
+                                            <strong>{{ item.Unidad }}</strong>
+                                        </mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="fifth">
+                                    <mat-form-field color="accent" style="width:100%" *ngIf="perms[0]['reg_t_paqPrecioCompra']">
+                                        <input matInput type="text" [value]="item.Compra" placeholder="Compra" disabled>
+                                        <mat-hint>
+                                            <strong>{{ item.Moneda }}</strong>
+                                        </mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="fifth">
+                                    <mat-form-field color="accent" style="width:100%">
+                                        <input matInput type="text" [value]="item.PrecioUnitario" placeholder="Venta" disabled>
+                                        <mat-hint>
+                                            <strong>{{ item.Moneda }}</strong>
+                                        </mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="fifth">
+                                    <mat-form-field color="accent" style="width:100%">
+                                        <input matInput type="text" [value]="item.Cantidad" placeholder="Cantidad" disabled>
+                                        <mat-hint>
+                                            <strong>{{ item.Unidad }}</strong>
+                                        </mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <div class="fifth">
+                                    <mat-form-field *ngIf='item.package != 1' color="accent" style="width : 100%" [formGroupName]="i">
+                                        <mat-select placeholder="Numeros de serie" multiple formControlName="numSeriesSelected">
+                                            <mat-select-trigger>
+                                                <span>
+                                                    {{formSelectNumSeries.get('numSeriesArray').value[i].numSeriesSelected ? formSelectNumSeries.get('numSeriesArray').value[i].numSeriesSelected.length
+                                                    : '0'}} {{item.Unidad}}
+                                                </span>
+                                            </mat-select-trigger>
+                                            <div *ngFor="let serie of item.listNumSeries">
+                                                <mat-option *ngIf="serie.almacen == almOrigen.value" [value]="serie.numSerie">
+                                                    <span>Numero de serie : {{serie.numSerie}}</span>
+                                                </mat-option>
+                                            </div>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div class="w3-quarter">
-                                <mat-form-field color="accent" style="width:100%" *ngIf="perms[0]['reg_t_paqPrecioCompra']">
-                                    <input matInput type="text" [value]="item.Compra" placeholder="Compra" disabled>
-                                    <mat-hint>
-                                        <strong>{{ item.Moneda }}</strong>
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div class="w3-quarter">
-                                <mat-form-field color="accent" style="width:100%">
-                                    <input matInput type="text" [value]="item.PrecioUnitario" placeholder="Venta" disabled>
-                                    <mat-hint>
-                                        <strong>{{ item.Moneda }}</strong>
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                            <div class="w3-quarter">
-                                <mat-form-field color="accent" style="width:100%">
-                                    <input matInput type="text" [value]="item.Cantidad" placeholder="Cantidad" disabled>
-                                    <mat-hint>
-                                        <strong>{{ item.Unidad }}</strong>
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                        </div>
+                        </span>
 
                     </mat-tab>
                 </mat-tab-group>
@@ -317,10 +336,10 @@
                     <td *ngIf="true">{{producto.Movimiento === 'ENTRADA'? ((producto.Compra * producto.Cantidad) | number:'.2-2'): ((producto.Venta
                         * producto.Cantidad) | number:'.2-2')}} {{ producto.Moneda }}</td>
                     <td *ngIf="true">
-                        <button mat-mini-fab color="primary" (click)="sumarCantidad(i)" style="margin:1px">
+                        <button mat-mini-fab color="primary" *ngIf="producto.isPaquete == 0" (click)="sumarCantidad(i)" style="margin:1px">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-mini-fab color="primary" (click)="restarCantidad(i)" style="margin:1px">
+                        <button mat-mini-fab color="primary" *ngIf="producto.isPaquete == 0" (click)="restarCantidad(i)" style="margin:1px">
                             <mat-icon>remove</mat-icon>
                         </button>
                         <button mat-mini-fab color="warn" (click)="borrarItem(i)" style="margin:1px">

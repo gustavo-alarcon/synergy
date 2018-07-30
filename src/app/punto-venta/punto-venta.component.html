@@ -50,9 +50,9 @@
                                     {{product.nombre}}
                                 </span>
                             </span>
-                            <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
-                                alt="">
-                            <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
+                            <!-- <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
+                                alt=""> -->
+                            <img defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
                                 <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}}</h3>
                                 <mat-icon>star_border</mat-icon>
@@ -90,9 +90,9 @@
                                     {{product.nombre}}
                                 </span>
                             </span>
-                            <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
-                                alt="">
-                            <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
+                            <!-- <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
+                                alt=""> -->
+                            <img defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
                                 <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
@@ -130,9 +130,9 @@
                                     {{product.nombre}}
                                 </span>
                             </span>
-                            <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
-                                alt="">
-                            <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
+                            <!-- <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
+                                alt=""> -->
+                            <img defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
                                 <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
@@ -170,9 +170,9 @@
                                     {{product.nombre}}
                                 </span>
                             </span>
-                            <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
-                                alt="">
-                            <img *ngIf="option.Imagen == ''" defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
+                            <!-- <img *ngIf="option.Imagen != ''" defaultImage='./assets/spinner.gif' lazyLoad="http://www.meraki-s.com/rent/ms-synergy/{{bdParsed}}/img/{{option.Imagen}}"
+                                alt=""> -->
+                            <img defaultImage='./assets/spinner.gif' lazyLoad="./assets/nopic.png" alt="">
                             <mat-grid-tile-footer>
                                 <h3 mat-line>{{ optionDisplay == 2 ? option.Codigo.toUpperCase() : option.Nombre }}</h3>
                                 <mat-icon>star_border</mat-icon>
@@ -332,15 +332,14 @@
                                         <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Unidad</th>
-                                        <th>Num. Serie</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let product of product.products">
-                                        <td style="border-radius: 5px;">{{product.nombre}}</td>
-                                        <td style="border-radius: 5px;">{{product.precio}}</td>
-                                        <td style="border-radius: 5px;">{{product.cantidad}}</td>
-                                        <td style="border-radius: 5px;">{{product.Unidad}}</td>
+                                    <tr *ngFor="let productPaquete of product.products">
+                                        <td style="border-radius: 5px;">{{productPaquete.nombre}}</td>
+                                        <td style="border-radius: 5px;">{{productPaquete.precio}}</td>
+                                        <td style="border-radius: 5px;">{{productPaquete.cantidad}}</td>
+                                        <td style="border-radius: 5px;">{{productPaquete.Unidad}}</td>
                                     </tr>
                                 </tbody>
                             </table>

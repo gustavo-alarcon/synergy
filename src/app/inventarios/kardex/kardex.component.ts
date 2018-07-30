@@ -16,7 +16,6 @@ import { Angular2Csv } from "angular2-csv/Angular2-csv";
   styleUrls: ["./kardex.component.css"]
 })
 export class KardexComponent implements OnInit {
-
   options: any;
   exportKardex: any;
 
@@ -29,23 +28,25 @@ export class KardexComponent implements OnInit {
   almacenes: any[] = [];
   productos: any[] = [];
   productos_filtrado: any[] = [];
-  kardex: any[] = [{
-    Fecha: "",
-    Documento: "",
-    Serie: "",
-    Correlativo: "",
-    Movimiento: "",
-    E_cantidad: "",
-    E_costo: "",
-    E_total: "",
-    S_cantidad: "",
-    S_costo: "",
-    S_total: "",
-    Stock: "",
-    SL_costo: "",
-    SL_total: "",
-    Stock_inicial: ""
-  }];
+  kardex: any[] = [
+    {
+      Fecha: "",
+      Documento: "",
+      Serie: "",
+      Correlativo: "",
+      Movimiento: "",
+      E_cantidad: "",
+      E_costo: "",
+      E_total: "",
+      S_cantidad: "",
+      S_costo: "",
+      S_total: "",
+      Stock: "",
+      SL_costo: "",
+      SL_total: "",
+      Stock_inicial: ""
+    }
+  ];
 
   sum_entrada = 0;
   sum_salida = 0;
@@ -71,6 +72,7 @@ export class KardexComponent implements OnInit {
       Fecha: ["", Validators.required],
       Almacen: ["", Validators.required],
       IDProd: ["", Validators.required],
+      ID: "",
       Unidad: ""
     });
 
@@ -114,14 +116,14 @@ export class KardexComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-0" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       } else {
         if (currentDate.getMonth() + 1 < 10) {
@@ -130,40 +132,40 @@ export class KardexComponent implements OnInit {
             "-0" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
             (currentDate.getMonth() + 1) +
             "-" +
-            (31 + 1) % 31;
+            ((31 + 1) % 31);
         }
       }
     } else {
       if (currentDate.getMonth() + 1 < 12) {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
           var limite =
             currentDate.getFullYear() +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }
       } else {
-        if ((currentDate.getMonth() + 2) % 13 + 1 < 10) {
+        if (((currentDate.getMonth() + 2) % 13) + 1 < 10) {
           var limite =
             currentDate.getFullYear() +
             1 +
             "-0" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         } else {
@@ -171,7 +173,7 @@ export class KardexComponent implements OnInit {
             currentDate.getFullYear() +
             1 +
             "-" +
-            ((currentDate.getMonth() + 2) % 13 + 1) +
+            (((currentDate.getMonth() + 2) % 13) + 1) +
             "-0" +
             1;
         }
@@ -222,47 +224,38 @@ export class KardexComponent implements OnInit {
   }
 
   onSubmit() {
+    for (let i = 0; i < this.productos.length; i++) {
+      if (
+        this.productos[i].Codigo == this.kardexForm.get("IDProd").value &&
+        this.productos[i].Zona == this.kardexForm.get("Almacen").value
+      ) {
+        this.kardexForm.patchValue({
+          ID: this.productos[i].ID
+        });
+      }
+    }
     this.consulta = false;
-    this.kardex = [{
-      Fecha: "",
-      Documento: "",
-      Serie: "",
-      Correlativo: "",
-      Movimiento: "",
-      E_cantidad: "",
-      E_costo: "",
-      E_total: "",
-      S_cantidad: "",
-      S_costo: "",
-      S_total: "",
-      Stock: "",
-      SL_costo: "",
-      SL_total: "",
-      Stock_inicial: ""
-    }];
+    this.kardex = [];
     this.inventariosService.consultaKardex(this.kardexForm.value);
 
     this.inventariosService.currentDataKardex.subscribe(res => {
-      this.kardex = res;
-      
-      if(this.kardex[0].Documento != 'STOCK INICIAL'){
-        this.kardex.unshift({
-          Fecha: "",
-          Documento: "STOCK INICIAL",
-          Serie: "",
-          Correlativo: "",
-          Movimiento: "",
-          E_cantidad: 0,
-          E_costo: 0,
-          E_total: 0,
-          S_cantidad: 0,
-          S_costo: 0,
-          S_total: 0,
-          Stock: this.stock_inicial,
-          SL_costo: 0,
-          SL_total: 0
-        });
-      }
+      this.kardex = JSON.parse(JSON.stringify(res));
+      this.kardex.unshift({
+        Fecha: "",
+        Documento: "STOCK INICIAL",
+        Serie: "",
+        Correlativo: "",
+        Movimiento: "",
+        E_cantidad: 0,
+        E_costo: 0,
+        E_total: 0,
+        S_cantidad: 0,
+        S_costo: 0,
+        S_total: 0,
+        Stock: this.stock_inicial,
+        SL_costo: 0,
+        SL_total: 0
+      });
 
       this.queryDone = true;
 

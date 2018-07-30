@@ -35,7 +35,7 @@
           <br>
           <mat-form-field class="meraki-fill">
             <mat-select formControlName="IDProd" placeholder="Producto">
-              <mat-option class="w3-indigo w3-hover-gray" *ngFor="let producto of productos_filtrado; let i = index" [value]="producto.ID"
+              <mat-option class="w3-indigo w3-hover-gray" *ngFor="let producto of productos_filtrado; let i = index" [value]="producto.Codigo"
                 (click)="setUnit(producto.ID)">{{ producto.Nombre }}</mat-option>
             </mat-select>
             <mat-error *ngIf="!kardexForm.valid">
