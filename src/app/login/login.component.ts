@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     this.loginSend = false; 
     this.loginData = this.saveLoginForm();
     
-    //<- TESTING 
+    //<- TESTING
     this.afAuth.auth.createUserWithEmailAndPassword(this.loginForm.get('username').value, this.loginForm.get('userpassword').value)
     .catch(error => {
       let errorCode = error.code;
