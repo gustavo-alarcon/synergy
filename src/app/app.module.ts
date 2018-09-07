@@ -1,4 +1,3 @@
-import { environment } from "./../environments/environment";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
@@ -6,7 +5,11 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule, Routes } from "@angular/router";
 import { RoutingModule } from "./routing/routing.module";
-import { AngularFireModule } from "angularfire2";
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 
 import {
   MatToolbarModule,
@@ -248,7 +251,11 @@ import { AddClientesPedidosComponent } from "./pedidos/caja-pedidos/clientes-ped
     MatTooltipModule,
     MatRadioModule,
     SatPopoverModule,
-    MatSortModule
+    MatSortModule,
+    AngularFireModule.initializeApp(environment.firebase, 'ms-synergy'),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   entryComponents: [
     InputModalComponent,
