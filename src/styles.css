@@ -72,6 +72,10 @@ body {
   width: 50% !important;
 }
 
+.mat-tab-label {
+  height: 100%;
+}
+
 mat-tab-header {
   height: 100% !important;
 }

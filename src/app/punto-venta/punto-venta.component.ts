@@ -30,7 +30,7 @@ import { ListCustomers } from "../classes/listCustomers";
 import { N2t } from "../classes/n2t";
 import { PosService } from "../servicios/pos.service";
 import * as crypto from "crypto-js";
-import { takeWhile } from "rxjs/operators";
+import { takeWhile, retry } from "rxjs/operators";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { Client } from "../ms-text/history/history.component";
@@ -264,7 +264,7 @@ export class PuntoVentaComponent implements OnInit {
     this.isLoadingResults = true;
     this.posService
       .getWarehouse(this.bd)
-      .pipe(takeWhile(() => this.alive))
+      .pipe(retry(),takeWhile(() => this.alive))
       .subscribe(res => {
         this.almacenes = res.records;
         this.almacenes.sort(this.sortBy("Nombre"));
@@ -275,7 +275,7 @@ export class PuntoVentaComponent implements OnInit {
   getProductsBD() {
     this.posService
       .getProducts(this.bd)
-      .pipe(takeWhile(() => this.alive))
+      .pipe(retry(),takeWhile(() => this.alive))
       .subscribe(res => {
         this.productos = res.records;
         this.productos.sort(this.sortBy("Nombre"));
@@ -286,7 +286,7 @@ export class PuntoVentaComponent implements OnInit {
   getPackagesBD() {
     this.posService
       .getPackages(this.bd)
-      .takeWhile(() => this.alive)
+      .pipe(retry(),takeWhile(() => this.alive))
       .subscribe(res => {
         this.isLoadingResults = false;
         this.paquetes = res.records;
@@ -1678,7 +1678,7 @@ export class PuntoVentaComponent implements OnInit {
           this.isLoadingResultsCheck.push(true);
           this.posService
             .getNumSerie(this.bd, this.productos_filtrado[i].Nombre)
-            .pipe(takeWhile(() => this.alive))
+            .pipe(retry(),takeWhile(() => this.alive))
             .subscribe(
               data => {
                 this.listCustomers[this.currentCustomer].listAction[
@@ -1798,7 +1798,7 @@ export class PuntoVentaComponent implements OnInit {
                   this.listCustomers[this.currentCustomer].listAction.length - 1
                 ].products[index].nombre
               )
-              .pipe(takeWhile(() => this.alive))
+              .pipe(retry(),takeWhile(() => this.alive))
               .subscribe(
                 data => {
                   this.listCustomers[this.currentCustomer].listAction[
@@ -2543,13 +2543,13 @@ export class PuntoVentaComponent implements OnInit {
   getAllProducts(alm: string) {
     this.posService
       .getProducts(this.bd)
-      .pipe(takeWhile(() => this.alive))
+      .pipe(retry(),takeWhile(() => this.alive))
       .subscribe(res => {
         this.productos = res.records;
         this.productos.sort(this.sortBy("Nombre"));
         this.posService
           .getPackages(this.bd)
-          .pipe(takeWhile(() => this.alive))
+          .pipe(retry(),takeWhile(() => this.alive))
           .subscribe(res => {
             this.isLoadingResults = false;
             this.paquetes = res.records;
